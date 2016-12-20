@@ -29,6 +29,13 @@ Window.prototype.create = function() {
     document.querySelector("#unclaimed").id = this.id;
 
     let div = document.getElementById(this.id);
+    if (this.id !== 1) {
+        let eID = this.id - 1;
+        let elementBefore = document.getElementById(eID);
+        div.style.top = (elementBefore.offsetTop + 35) + "px";
+        div.style.left = (elementBefore.offsetLeft + 35) + "px";
+    }
+
     this.handleMovement(div);
 
     div.querySelector(".close").addEventListener("click", function(event) {

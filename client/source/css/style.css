@@ -30,6 +30,7 @@ footer {height: 35px; background: linear-gradient(black, #333); color: white; pa
 .window-top .name {font-weight: bold; cursor: default;}
 .close, .minimize {float: right; background-color: black; color: white; text-decoration: none;
     border: 1px solid #333; padding: 0 10px 2px 10px; font-size: 12px;}
+.close:hover, .minimize:hover {background-color: #333;}
 
 /* Window-footer */
 .window-footer {height: 15px; background: linear-gradient(black, #333); color: white; font-size: 8px;
