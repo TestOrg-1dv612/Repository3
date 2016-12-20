@@ -7,4 +7,6 @@
 
 const Window = require("./Window");
 
-let window = new Window();
+let window = new Window(1);
+
+let window2 = new Window(2);

@@ -8,7 +8,7 @@ footer, h1, h2, h3, h4, p, ul, li, ol, hr, a
 {margin: 0; padding: 0;}
 
 /* Html & Body */
-html, body {height: 100%; font-family: Tahoma, sans-serif;}
+html, body {height: 100%; font-family: Tahoma, sans-serif; overflow: hidden;}
 
 /* Container of the desktop */
 #desktop {width: 100%; min-height: 100%; background-color: grey; margin-bottom: -40px;}
@@ -22,11 +22,12 @@ footer {height: 35px; background: linear-gradient(black, #333); color: white; pa
 
 /* Window-wrapper */
 .window-wrapper {width: 300px; max-height: 100%; background-color: white; margin-bottom: -15px; font-size: 13px;
-    position: absolute; top: 50px; left: 200px;}
+    position: absolute; top: 50px; left: 200px; border-radius: 4px;}
 
 /* The top of a window, including links */
-.window-top {height: 20px; background: linear-gradient(black, #333); color: white; padding: 4px 5px 2px 10px;}
-.window-top .name {font-weight: bold;}
+.window-top {height: 20px; background: linear-gradient(black, #333); color: white; padding: 4px 5px 2px 10px;
+    border-top-left-radius: 4px; border-top-right-radius: 4px;}
+.window-top .name {font-weight: bold; cursor: default;}
 .close, .minimize {float: right; background-color: black; color: white; text-decoration: none;
     border: 1px solid #333; padding: 0 10px 2px 10px; font-size: 12px;}
 

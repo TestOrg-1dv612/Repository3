@@ -11,8 +11,10 @@
  * Creates a new instance of Window.
  *
  * @constructor
+ * @param {Number} id
  */
-function Window() {
+function Window(id) {
+    this.id = id;
     this.container = document.querySelector("#desktop");
     this.create();
 }
@@ -24,6 +26,7 @@ Window.prototype.create = function() {
     let template = document.querySelector("#window");
     let windowDiv = document.importNode(template.content, true);
     this.container.appendChild(windowDiv);
+    document.querySelector("#unclaimed").id = this.id;
 
     this.handleMovement();
 };
@@ -32,23 +35,25 @@ Window.prototype.create = function() {
  * Handles dragging movements of the window.
  */
 Window.prototype.handleMovement = function() {
-    let windowTop = document.querySelectorAll(".window-wrapper .window-top")[0];
+    let windowDiv = document.getElementById(this.id);
 
     let posX = 0;
     let posY = 0;
 
     let moveWindow = function(event) {
-        document.styleSheets[0].cssRules[4].style.top = (event.clientY - posY) + "px";
-        document.styleSheets[0].cssRules[4].style.left = (event.clientX - posX) + "px";
+        windowDiv.style.top = (event.clientY - posY) + "px";
+        windowDiv.style.left = (event.clientX - posX) + "px";
     };
 
     let getPosition = function(event) {
-        posX = event.clientX - windowTop.parentNode.offsetLeft;
-        posY = event.clientY - windowTop.parentNode.offsetTop;
+        event.preventDefault();
+        windowDiv.parentNode.appendChild(windowDiv);
+        posX = event.clientX - windowDiv.offsetLeft;
+        posY = event.clientY - windowDiv.offsetTop;
         window.addEventListener("mousemove", moveWindow);
     };
 
-    windowTop.addEventListener("mousedown", getPosition);
+    windowDiv.firstElementChild.addEventListener("mousedown", getPosition);
 
     window.addEventListener("mouseup", function() {
         window.removeEventListener("mousemove", moveWindow);
