@@ -38,6 +38,12 @@ Window.prototype.create = function() {
 
     this.handleMovement(div);
 
+    div.addEventListener("click", function() {
+        if (div !== div.parentNode.lastElementChild) {
+            div.parentNode.appendChild(div);
+        } else { return; }
+    });
+
     div.querySelector(".close").addEventListener("click", function(event) {
         event.preventDefault();
         this.close(div);
