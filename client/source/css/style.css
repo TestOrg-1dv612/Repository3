@@ -17,7 +17,7 @@ html, body {height: 100%; font-family: Tahoma, sans-serif; overflow: hidden;}
 footer {height: 35px; background: linear-gradient(black, #333); color: white; padding-left: 10px; padding-top: 5px;}
 
 /**
- * Styles for an instance of a Window-object
+ * Styles for instances of a Window-object
  */
 
 /* Window-wrapper */

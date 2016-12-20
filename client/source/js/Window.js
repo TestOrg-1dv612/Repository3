@@ -11,7 +11,7 @@
  * Creates a new instance of Window.
  *
  * @constructor
- * @param {Number} id
+ * @param {Number} id - The id of the window to create.
  */
 function Window(id) {
     this.id = id;
@@ -28,36 +28,51 @@ Window.prototype.create = function() {
     this.container.appendChild(windowDiv);
     document.querySelector("#unclaimed").id = this.id;
 
-    this.handleMovement();
+    let div = document.getElementById(this.id);
+    this.handleMovement(div);
+
+    div.querySelector(".close").addEventListener("click", function(event) {
+        event.preventDefault();
+        this.close(div);
+    }.bind(this));
 };
 
 /**
  * Handles dragging movements of the window.
+ *
+ * @param {Element} div - The div containing the window.
  */
-Window.prototype.handleMovement = function() {
-    let windowDiv = document.getElementById(this.id);
-
+Window.prototype.handleMovement = function(div) {
     let posX = 0;
     let posY = 0;
 
     let moveWindow = function(event) {
-        windowDiv.style.top = (event.clientY - posY) + "px";
-        windowDiv.style.left = (event.clientX - posX) + "px";
+        div.style.top = (event.clientY - posY) + "px";
+        div.style.left = (event.clientX - posX) + "px";
     };
 
     let getPosition = function(event) {
         event.preventDefault();
-        windowDiv.parentNode.appendChild(windowDiv);
-        posX = event.clientX - windowDiv.offsetLeft;
-        posY = event.clientY - windowDiv.offsetTop;
+        div.parentNode.appendChild(div);
+        posX = event.clientX - div.offsetLeft;
+        posY = event.clientY - div.offsetTop;
         window.addEventListener("mousemove", moveWindow);
     };
 
-    windowDiv.firstElementChild.addEventListener("mousedown", getPosition);
+    div.firstElementChild.addEventListener("mousedown", getPosition);
 
     window.addEventListener("mouseup", function() {
         window.removeEventListener("mousemove", moveWindow);
     });
+};
+
+/**
+ * Closes the window.
+ *
+ * @param {Element} element - The element window to close.
+ */
+Window.prototype.close = function(element) {
+    element.parentNode.removeChild(element);
 };
 
 /**
