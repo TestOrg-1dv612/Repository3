@@ -11,7 +11,7 @@
  * Creates a new instance of Window.
  *
  * @constructor
- * @param {Number} id - The id of the window to create.
+ * @param {String} id - The id of the window to create.
  */
 function Window(id) {
     this.id = id;
@@ -28,26 +28,49 @@ Window.prototype.create = function() {
     this.container.appendChild(windowDiv);
     document.querySelector("#unclaimed").id = this.id;
 
+    let id = this.id.toString();
     let div = document.getElementById(this.id);
-    if (this.id !== 1) {
-        let eID = this.id - 1;
-        let elementBefore = document.getElementById(eID);
-        div.style.top = (elementBefore.offsetTop + 35) + "px";
-        div.style.left = (elementBefore.offsetLeft + 35) + "px";
-    }
 
+    this.position(id, div);
     this.handleMovement(div);
 
-    div.addEventListener("click", function() {
+    div.addEventListener("click", function(event) {
         if (div !== div.parentNode.lastElementChild) {
             div.parentNode.appendChild(div);
-        } else { return; }
-    });
-
-    div.querySelector(".close").addEventListener("click", function(event) {
-        event.preventDefault();
-        this.close(div);
+        } else if (event.target === div.querySelector(".close")) {
+            event.preventDefault();
+            this.close(div);
+        }
     }.bind(this));
+};
+
+/**
+ * Positions the window in the desktop, stacks if necessary.
+ *
+ * @param {String} id - The id of the window.
+ * @param {Element} div - The window element.
+ */
+Window.prototype.position = function(id, div) {
+    let stackWindows = function(app) {
+        if (id.indexOf("1") === -1) {
+            let idNr = id.charAt(1) - 1;
+            if (document.getElementById(app + idNr)) {
+                let elementBefore = document.getElementById(app + idNr);
+                div.style.top = (elementBefore.offsetTop + 35) + "px";
+                div.style.left = (elementBefore.offsetLeft + 35) + "px";
+            }
+        }
+    };
+
+    if (id.indexOf("c") !== -1) {
+        stackWindows("c");
+    } else if (id.indexOf("m") !== -1) {
+        div.style.left = (div.offsetLeft + 150) + "px";
+        stackWindows("m");
+    } else if (id.indexOf("i") !== -1) {
+        div.style.left = (div.offsetLeft + 300) + "px";
+        stackWindows("i");
+    }
 };
 
 /**
