@@ -12,10 +12,57 @@
  *
  * @constructor
  * @param {String} id - The id of the window to create.
+ * @throws {Error} - Window must have an id.
  */
 function Window(id) {
-    this.id = id;
-    this.container = document.querySelector("#desktop");
+    if (!id) {
+        throw new Error("Window must have an id.");
+    }
+
+    /**
+     * Gets Window's top-name.
+     *
+     * @private
+     * @type {Element}
+     * @name Window#name
+     */
+    Object.defineProperty(this, "name", {
+        get: function() {
+            return document.getElementById(this.id).querySelector(".name");
+        }
+    });
+
+    /**
+     * Gets Window's top-name.
+     *
+     * @private
+     * @type {Element}
+     * @name Window#icon
+     */
+    Object.defineProperty(this, "icon", {
+        get: function() {
+            return document.getElementById(this.id).querySelector(".logo");
+        }
+    });
+
+    /**
+     * Gets Window's id.
+     *
+     * @private
+     * @type {String}
+     * @name Window#id
+     * @throws {TypeError} - Must be a string.
+     */
+    Object.defineProperty(this, "id", {
+        get: function() {
+            if (typeof id !== "string") {
+                throw new TypeError("Window id must be a string.");
+            }
+
+            return id;
+        }
+    });
+
     this.create();
 }
 
@@ -25,7 +72,7 @@ function Window(id) {
 Window.prototype.create = function() {
     let template = document.querySelector("#window");
     let windowDiv = document.importNode(template.content, true);
-    this.container.appendChild(windowDiv);
+    document.querySelector("#desktop").appendChild(windowDiv);
     document.querySelector("#unclaimed").id = this.id;
 
     let id = this.id.toString();

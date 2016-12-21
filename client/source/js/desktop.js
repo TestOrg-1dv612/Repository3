@@ -20,6 +20,8 @@ function init() {
                 current.addEventListener("click", function(event) {
                     event.preventDefault();
                     newWindow = new DesktopWindow("c" + cNr);
+                    newWindow.name.textContent = "Chat";
+                    newWindow.icon.src = "/image/chat.png";
                     cNr += 1;
                 });
 
@@ -36,6 +38,8 @@ function init() {
                 current.addEventListener("click", function(event) {
                     event.preventDefault();
                     newWindow = new DesktopWindow("i" + iNr);
+                    newWindow.name.textContent = "Application info";
+                    newWindow.icon.src = "/image/info.png";
                     iNr += 1;
                 });
 
