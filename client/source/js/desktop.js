@@ -12,6 +12,11 @@ const DesktopWindow = require("./Window");
  * @param {Element} container - The container of the clock.
  */
 function desktopClock(container) {
+    console.log("clock");
+    if (!container) {
+        container = document.querySelector("#clock");
+    }
+
     let today = new Date();
     let hours = today.getHours();
     let mins = today.getMinutes();
@@ -21,7 +26,6 @@ function desktopClock(container) {
     }
 
     container.textContent = hours + ":" + mins;
-    setTimeout(desktopClock, 60000);
 }
 
 /**
@@ -78,6 +82,7 @@ function init() {
 
     getDate(document.querySelector("#date"));
     desktopClock(document.querySelector("#clock"));
+    setInterval(desktopClock, 5000);
 }
 
 /**
