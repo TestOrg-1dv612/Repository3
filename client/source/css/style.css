@@ -12,7 +12,7 @@ html, body {height: 100%; font-family: Tahoma, sans-serif; overflow: hidden;}
 
 /* Container of the desktop */
 #desktop {width: 100%; min-height: 100%; background-color: white; background-image: url(/image/desktopbg.jpg);
-    background-position: center bottom; background-size: contain; margin-bottom: -45px;}
+    background-position: center bottom; background-size: contain; background-repeat: no-repeat; margin-bottom: -45px;}
 
 /* Footer */
 footer {height: 40px; background: linear-gradient(black, #333); color: white; padding-left: 10px; padding-top: 5px;
@@ -27,7 +27,8 @@ footer img:hover {max-height: 45px; position: relative; bottom: 10px;}
 
 /* Window-wrapper */
 .window-wrapper {width: 300px; max-height: 100%; background-color: white; margin-bottom: -15px; font-size: 13px;
-    position: absolute; top: 50px; left: 200px; border-radius: 4px;}
+    position: absolute; top: 50px; left: 150px; border-top-left-radius: 4px; border-top-right-radius: 4px;
+    box-shadow: -5px 6px 12px -7px rgba(0,0,0,0.53);}
 
 /* The top of a window, including links */
 .window-top {height: 20px; background: linear-gradient(black, #333); color: white; padding: 3px 5px 2px 10px;

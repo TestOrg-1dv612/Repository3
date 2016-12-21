@@ -17,21 +17,24 @@ function init() {
     document.querySelectorAll("nav a").forEach(function(current, index) {
         switch (index){
             case 0:
-                current.addEventListener("click", function() {
+                current.addEventListener("click", function(event) {
+                    event.preventDefault();
                     newWindow = new DesktopWindow("c" + cNr);
                     cNr += 1;
                 });
 
                 break;
             case 1:
-                current.addEventListener("click", function() {
+                current.addEventListener("click", function(event) {
+                    event.preventDefault();
                     newWindow = new DesktopWindow("m" + mNr);
                     mNr += 1;
                 });
 
                 break;
             case 2:
-                current.addEventListener("click", function() {
+                current.addEventListener("click", function(event) {
+                    event.preventDefault();
                     newWindow = new DesktopWindow("i" + iNr);
                     iNr += 1;
                 });

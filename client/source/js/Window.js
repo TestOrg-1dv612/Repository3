@@ -65,10 +65,10 @@ Window.prototype.position = function(id, div) {
     if (id.indexOf("c") !== -1) {
         stackWindows("c");
     } else if (id.indexOf("m") !== -1) {
-        div.style.left = (div.offsetLeft + 150) + "px";
+        div.style.left = (div.offsetLeft + 250) + "px";
         stackWindows("m");
     } else if (id.indexOf("i") !== -1) {
-        div.style.left = (div.offsetLeft + 300) + "px";
+        div.style.left = (div.offsetLeft + 500) + "px";
         stackWindows("i");
     }
 };
