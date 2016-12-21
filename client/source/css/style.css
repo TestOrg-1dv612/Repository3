@@ -11,10 +11,15 @@ footer, h1, h2, h3, h4, p, ul, li, ol, hr, a
 html, body {height: 100%; font-family: Tahoma, sans-serif; overflow: hidden;}
 
 /* Container of the desktop */
-#desktop {width: 100%; min-height: 100%; background-color: grey; margin-bottom: -40px;}
+#desktop {width: 100%; min-height: 100%; background-color: white; background-image: url(/image/desktopbg.jpg);
+    background-position: center bottom; background-size: contain; margin-bottom: -45px;}
 
 /* Footer */
-footer {height: 35px; background: linear-gradient(black, #333); color: white; padding-left: 10px; padding-top: 5px;}
+footer {height: 40px; background: linear-gradient(black, #333); color: white; padding-left: 10px; padding-top: 5px;
+    background: rgba(0, 0, 0, .7); box-shadow: inset 0px 9px 13px 0px rgba(0,0,0,0.75); border-top-left-radius: 2px;
+    border-top--radius: 2px;}
+footer img {max-height: 35px; vertical-align: top;}
+footer img:hover {max-height: 45px; position: relative; bottom: 10px;}
 
 /**
  * Styles for instances of a Window-object
@@ -25,9 +30,10 @@ footer {height: 35px; background: linear-gradient(black, #333); color: white; pa
     position: absolute; top: 50px; left: 200px; border-radius: 4px;}
 
 /* The top of a window, including links */
-.window-top {height: 20px; background: linear-gradient(black, #333); color: white; padding: 4px 5px 2px 10px;
+.window-top {height: 20px; background: linear-gradient(black, #333); color: white; padding: 3px 5px 2px 10px;
     border-top-left-radius: 4px; border-top-right-radius: 4px;}
 .window-top .name {font-weight: bold; cursor: default;}
+.window-top .logo {width: 18px; vertical-align: middle;}
 .close, .minimize {float: right; background-color: black; color: white; text-decoration: none;
     border: 1px solid #333; padding: 0 10px 2px 10px; font-size: 12px;}
 .close:hover, .minimize:hover {background-color: #333;}
