@@ -17,18 +17,41 @@ const DesktopWindow = require("./DesktopWindow");
 function Memory(id) {
     DesktopWindow.call(this, id);
 
+    /**
+     * The size of the board.
+     */
     this.size = 16;
+
+    /**
+     * The array to contain the brick images.
+     */
     this.images = [];
+
+    /**
+     * The first turned brick.
+     */
     this.turn1 = null;
+
+    /**
+     * The second turned brick.
+     */
     this.turn2 = null;
+
+    /**
+     * The number of pairs.
+     */
     this.pairs = 0;
+
+    /**
+     * The number of clicks.
+     */
     this.nrOfClicks = 0;
 
     this.start();
 }
 
 /**
- * Handles inheritance from Window.
+ * Handles inheritance from DesktopWindow.
  *
  * @type {DesktopWindow}
  */
