@@ -4,7 +4,7 @@
 
 "use strict";
 
-const DesktopWindow = require("./Window");
+const DesktopWindow = require("./DesktopWindow");
 const Memory = require("./Memory");
 
 /**

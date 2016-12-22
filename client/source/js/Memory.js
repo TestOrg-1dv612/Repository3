@@ -7,7 +7,7 @@
 
 "use strict";
 
-const DesktopWindow = require("./Window");
+const DesktopWindow = require("./DesktopWindow");
 
 /**
  * Creates an instance of a Memory game.

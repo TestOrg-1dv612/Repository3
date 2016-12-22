@@ -1,5 +1,5 @@
 /**
- * Module for Window.
+ * Module for DesktopWindow.
  *
  * @author mhammarstedt
  * @version 1.16.0
@@ -8,23 +8,23 @@
 "use strict";
 
 /**
- * Creates a new instance of Window.
+ * Creates a new instance of DesktopWindow.
  *
  * @constructor
  * @param {String} id - The id of the window to create.
  * @throws {Error} - Window must have an id.
  */
-function Window(id) {
+function DesktopWindow(id) {
     if (!id) {
         throw new Error("Window must have an id.");
     }
 
     /**
-     * Gets Window's top-name.
+     * Gets DesktopWindow's top-name.
      *
      * @private
      * @type {Element}
-     * @name Window#name
+     * @name DesktopWindow#name
      */
     Object.defineProperty(this, "name", {
         get: function() {
@@ -33,11 +33,11 @@ function Window(id) {
     });
 
     /**
-     * Gets Window's top-name.
+     * Gets DesktopWindow's top-name.
      *
      * @private
      * @type {Element}
-     * @name Window#icon
+     * @name DesktopWindow#icon
      */
     Object.defineProperty(this, "icon", {
         get: function() {
@@ -46,11 +46,11 @@ function Window(id) {
     });
 
     /**
-     * Gets Window's id.
+     * Gets DesktopWindow's id.
      *
      * @private
      * @type {String}
-     * @name Window#id
+     * @name DesktopWindow#id
      * @throws {TypeError} - Must be a string.
      */
     Object.defineProperty(this, "id", {
@@ -69,7 +69,7 @@ function Window(id) {
 /**
  * Creates a new window from template.
  */
-Window.prototype.create = function() {
+DesktopWindow.prototype.create = function() {
     let template = document.querySelector("#window");
     let windowDiv = document.importNode(template.content, true);
     document.querySelector("#desktop").appendChild(windowDiv);
@@ -84,7 +84,9 @@ Window.prototype.create = function() {
     div.addEventListener("click", function(event) {
         if (div !== div.parentNode.lastElementChild) {
             div.parentNode.appendChild(div);
-        } else if (event.target === div.querySelector(".close")) {
+        }
+
+        if (event.target === div.querySelector(".close")) {
             event.preventDefault();
             this.close(div);
         }
@@ -97,7 +99,7 @@ Window.prototype.create = function() {
  * @param {String} id - The id of the window.
  * @param {Element} div - The window element.
  */
-Window.prototype.position = function(id, div) {
+DesktopWindow.prototype.position = function(id, div) {
     let stackWindows = function(app) {
         if (id.indexOf("1") === -1) {
             let idNr = id.charAt(1) - 1;
@@ -125,7 +127,7 @@ Window.prototype.position = function(id, div) {
  *
  * @param {Element} div - The div containing the window.
  */
-Window.prototype.handleMovement = function(div) {
+DesktopWindow.prototype.handleMovement = function(div) {
     let posX = 0;
     let posY = 0;
 
@@ -154,13 +156,13 @@ Window.prototype.handleMovement = function(div) {
  *
  * @param {Element} element - The element window to close.
  */
-Window.prototype.close = function(element) {
+DesktopWindow.prototype.close = function(element) {
     element.parentNode.removeChild(element);
 };
 
 /**
  * Exports.
  *
- * @type {Window}
+ * @type {DesktopWindow}
  */
-module.exports = Window;
+module.exports = DesktopWindow;
