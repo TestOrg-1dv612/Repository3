@@ -40,6 +40,18 @@ function getDate(container) {
 }
 
 /**
+ * Gets application information for info window.
+ *
+ * @param {Object} element - The element to display the information in.
+ */
+function info(element) {
+    let template = document.querySelector("#info").content;
+    let container = document.getElementById(element.id).querySelector(".content");
+
+    container.appendChild(document.importNode(template, true));
+}
+
+/**
  * Initiates desktop by adding necessary event listeners.
  */
 function init() {
@@ -73,6 +85,7 @@ function init() {
                     newWindow = new DesktopWindow("i" + iNr);
                     newWindow.name.textContent = "Application info";
                     newWindow.icon.src = "/image/info.png";
+                    info(newWindow);
                     iNr += 1;
                 });
 
@@ -91,5 +104,6 @@ function init() {
 module.exports = {
     init: init,
     getClock: desktopClock,
-    getDate: getDate
+    getDate: getDate,
+    getInfo: info
 };
