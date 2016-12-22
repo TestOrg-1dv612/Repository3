@@ -5,6 +5,7 @@
 "use strict";
 
 const DesktopWindow = require("./Window");
+const Memory = require("./Memory");
 
 /**
  * Gets the current time and presents it in the given container.
@@ -12,7 +13,6 @@ const DesktopWindow = require("./Window");
  * @param {Element} container - The container of the clock.
  */
 function desktopClock(container) {
-    console.log("clock");
     if (!container) {
         container = document.querySelector("#clock");
     }
@@ -62,7 +62,7 @@ function init() {
             case 1:
                 current.addEventListener("click", function(event) {
                     event.preventDefault();
-                    newWindow = new DesktopWindow("m" + mNr);
+                    newWindow = new Memory("m" + mNr);
                     mNr += 1;
                 });
 

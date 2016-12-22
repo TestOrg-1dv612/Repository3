@@ -31,7 +31,7 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
  */
 
 /* Window-wrapper */
-.window-wrapper {width: 300px; max-height: 100%; background-color: white; margin-bottom: -15px; font-size: 13px;
+.window-wrapper {min-width: 200px; max-height: 100%; background-color: white; margin-bottom: -15px; font-size: 13px;
     position: absolute; top: 50px; left: 150px; border-top-left-radius: 4px; border-top-right-radius: 4px;
     box-shadow: -5px 6px 12px -7px rgba(0,0,0,0.53);}
 
@@ -52,3 +52,8 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 
 /* Content of a window */
 .content {padding: 10px;}
+
+/* Classes relevant for Memory application*/
+.brick {width: 50px; float: left; padding-left: 4px; padding-bottom: 4px;}
+.board16 {width: 216px; height: 216px; padding-bottom: 5px;}
+.empty {visibility: hidden}
