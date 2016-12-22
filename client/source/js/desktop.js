@@ -5,6 +5,7 @@
 "use strict";
 
 const DesktopWindow = require("./DesktopWindow");
+const Chat = require("./Chat");
 const Memory = require("./Memory");
 
 /**
@@ -64,7 +65,7 @@ function init() {
             case 0:
                 current.addEventListener("click", function(event) {
                     event.preventDefault();
-                    newWindow = new DesktopWindow("c" + cNr);
+                    newWindow = new Chat("c" + cNr);
                     newWindow.name.textContent = "Chat";
                     newWindow.icon.src = "/image/chat.png";
                     cNr += 1;

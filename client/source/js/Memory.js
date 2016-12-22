@@ -13,6 +13,7 @@ const DesktopWindow = require("./DesktopWindow");
  * Creates an instance of a Memory game.
  *
  * @constructor
+ * @param {String} id - The id of the window.
  */
 function Memory(id) {
     DesktopWindow.call(this, id);
