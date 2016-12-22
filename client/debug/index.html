@@ -8,27 +8,16 @@
 <body>
     <div id="desktop">
         <template id="window">
-        <div id="unclaimed" class="window-wrapper">
-            <div class="window-top">
-                <img src="/image/memory.png" class="logo">
-                <span class="name">Memory</span>
-                <a href="#" class="close">x</a>
-                <a href="#" class="minimize">–</a>
+            <div id="unclaimed" class="window-wrapper">
+                <div class="window-top">
+                    <img src="/image/memory.png" class="logo">
+                    <span class="name">Memory</span>
+                    <a href="#" class="close">x</a>
+                    <a href="#" class="minimize">–</a>
+                </div>
+                <div class="content"></div>
+                <div class="window-footer"></div>
             </div>
-            <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dictum, ex aliquet pharetra cursus,
-                dui metus pulvinar tellus, non tincidunt ligula odio eget eros. Aliquam sodales, diam ac laoreet
-                fringilla, velit purus porttitor elit, sit amet pulvinar nunc nulla in est. Maecenas mollis, dolor
-                eget consequat sollicitudin, odio leo venenatis ex, vitae mattis lectus est sit amet lacus. Ut
-                consequat interdum est in luctus. Cras finibus risus a ex suscipit, eget auctor ex vestibulum.
-                Suspendisse dapibus ante ac risus suscipit vestibulum. Nullam mattis hendrerit tincidunt. Proin
-                convallis lobortis laoreet. Cras finibus risus a ex suscipit, eget auctor ex vestibulum.
-                Suspendisse dapibus ante ac risus suscipit vestibulum. Nullam mattis hendrerit tincidunt. Proin
-                convallis lobortis laoreet. Nullam mattis hendrerit tincidunt. Proin
-                convallis lobortis laoreet.
-            </div>
-            <div class="window-footer"></div>
-        </div>
         </template>
     </div>
     <footer>
@@ -39,6 +28,18 @@
             <p><span id="date"></span><span id="clock"></span></p>
         </nav>
     </footer>
+
+    <template id="memory">
+        <div class="memoryContainer">
+            <a href="#"><img src="/image/memory/0.png" alt="A Memory brick" class="brick"></a>
+        </div>
+        <div class="memoryResults">
+            <hr>
+            <p>Pairs: <span class="pairs">0</span></p>
+            <p>Number of tries: <span class="tries">0</span></p>
+            <div class="message"></div>
+        </div>
+    </template>
     <script src="javascript/build.js"></script>
 </body>
 </html>
