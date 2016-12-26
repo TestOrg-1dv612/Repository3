@@ -52,7 +52,7 @@ Chat.prototype.open = function() {
                 userMessage.textContent = "Logged in as " + this.user;
 
             }
-        });
+        }.bind(this));
     }
 
     messageInput.addEventListener("keypress", function(event) {
@@ -65,7 +65,6 @@ Chat.prototype.open = function() {
 
     this.socket.addEventListener("message", function(event) {
         let data = JSON.parse(event.data);
-        console.log(data);
 
         if (data.type === "message" || data.type === "notification") {
             this.receive(data);
@@ -106,6 +105,8 @@ Chat.prototype.receive = function(data) {
 
     container.appendChild(user);
     container.appendChild(pElem);
+
+    container.scrollTop = container.scrollHeight - container.clientHeight;
 };
 
 /**

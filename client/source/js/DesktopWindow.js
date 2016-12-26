@@ -90,6 +90,11 @@ DesktopWindow.prototype.create = function() {
             event.preventDefault();
             this.close(div);
         }
+
+        if (document.getElementById(this.id).querySelector(".messageContainer")) {
+            let container = document.getElementById(this.id).querySelector(".messageContainer");
+            container.scrollTop = container.scrollHeight - container.clientHeight;
+        }
     }.bind(this));
 };
 
