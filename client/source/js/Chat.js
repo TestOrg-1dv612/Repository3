@@ -37,6 +37,23 @@ Chat.prototype.open = function() {
     let template = document.querySelector("#chat").content;
     let content = document.importNode(template, true);
     document.getElementById(this.id).querySelector(".content").appendChild(content);
+
+    let container = document.getElementById(this.id).querySelector(".messageContainer");
+    let messageInput = document.getElementById(this.id).querySelector(".chatMessage");
+    let user = document.getElementById(this.id).querySelector(".user input");
+    let userMessage = user.parentNode;
+
+    userMessage.lastElementChild.addEventListener("click", function() {
+        if (user.value) {
+            this.user = user.value;
+            userMessage.removeChild(user);
+            userMessage.removeChild(userMessage.lastElementChild);
+            userMessage.classList.add("loggedIn");
+            userMessage.textContent = "Logged in as " + this.user;
+
+        }
+    });
+
 };
 
 /**

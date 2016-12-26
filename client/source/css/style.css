@@ -55,8 +55,10 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 
 /* Classes relevant for Chat application */
 .messageContainer {width: 100%; background-color: beige; height: 200px; border: 1px solid lightgrey;
-    border-radius: 5px; margin-bottom: 10px;}
-.chatMessage {max-width: 97%; margin-left: 3px;}
+    border-radius: 5px;}
+.chatMessage {max-width: 97%; margin: 10px 0 10px 3px;}
+.user {margin-left: 3px; font-size: 12px;}
+.loggedIn {font-style: italic;}
 
 /* Classes relevant for Memory application*/
 .brick {width: 50px; float: left; padding-left: 4px; padding-bottom: 4px;}
