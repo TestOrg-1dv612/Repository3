@@ -19,6 +19,7 @@ function Chat(id) {
     DesktopWindow.call(this, id);
 
     this.user = null;
+    this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
     this.open();
 }
 
@@ -38,22 +39,73 @@ Chat.prototype.open = function() {
     let content = document.importNode(template, true);
     document.getElementById(this.id).querySelector(".content").appendChild(content);
 
-    let container = document.getElementById(this.id).querySelector(".messageContainer");
     let messageInput = document.getElementById(this.id).querySelector(".chatMessage");
-    let user = document.getElementById(this.id).querySelector(".user input");
-    let userMessage = user.parentNode;
+    let userMessage = document.getElementById(this.id).querySelector(".user");
 
-    userMessage.lastElementChild.addEventListener("click", function() {
-        if (user.value) {
-            this.user = user.value;
-            userMessage.removeChild(user);
-            userMessage.removeChild(userMessage.lastElementChild);
-            userMessage.classList.add("loggedIn");
-            userMessage.textContent = "Logged in as " + this.user;
+    if (this.user === null) {
+        userMessage.lastElementChild.addEventListener("click", function() {
+            if (userMessage.firstElementChild.value) {
+                this.user = userMessage.firstElementChild.value;
+                userMessage.removeChild(userMessage.firstElementChild);
+                userMessage.removeChild(userMessage.lastElementChild);
+                userMessage.classList.add("loggedIn");
+                userMessage.textContent = "Logged in as " + this.user;
 
+            }
+        });
+    }
+
+    messageInput.addEventListener("keypress", function(event) {
+        if (event.keyCode === 13 || event.which === 13) {
+            event.preventDefault();
+            this.send(messageInput.value);
+            messageInput.value = "";
         }
-    });
+    }.bind(this));
 
+    this.socket.addEventListener("message", function(event) {
+        let data = JSON.parse(event.data);
+        console.log(data);
+
+        if (data.type === "message" || data.type === "notification") {
+            this.receive(data);
+        }
+    }.bind(this));
+
+};
+
+/**
+ * Sends typed in messages.
+ *
+ * @param {String} input - The input message from the textarea.
+ */
+Chat.prototype.send = function(input) {
+    let message = {
+        type: "message",
+        data: input,
+        username: this.user,
+        key: "eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd"
+    };
+
+    this.socket.send(JSON.stringify(message));
+};
+
+/**
+ * Receives and displays messages in application.
+ *
+ * @param {Object} data - The received data.
+ */
+Chat.prototype.receive = function(data) {
+    let container = document.getElementById(this.id).querySelector(".messageContainer");
+
+    let user = document.createElement("p");
+    user.setAttribute("class", "username");
+    user.appendChild(document.createTextNode(data.username));
+    let pElem = document.createElement("p");
+    pElem.appendChild(document.createTextNode(data.data));
+
+    container.appendChild(user);
+    container.appendChild(pElem);
 };
 
 /**
