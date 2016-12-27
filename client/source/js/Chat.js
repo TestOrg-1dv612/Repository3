@@ -81,7 +81,7 @@ Chat.prototype.getUser = function(div) {
         div.textContent = "Logged in as " + this.user;
     }.bind(this);
 
-    let getUsername = function () {
+    let getUsername = function() {
         if (div.firstElementChild.value) {
             this.user = div.firstElementChild.value;
             input.classList.remove("redbg");
@@ -99,7 +99,8 @@ Chat.prototype.getUser = function(div) {
     }
 
     this.dropdown.textContent = "Change user";
-    this.dropdown.addEventListener("click", function() {
+    this.dropdown.addEventListener("click", function(event) {
+        event.preventDefault();
         div.textContent = "User: ";
         div.classList.remove("loggedIn");
         div.appendChild(input);

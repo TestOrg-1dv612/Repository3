@@ -65,6 +65,11 @@ Memory.prototype.constructor = Memory;
 Memory.prototype.start = function() {
     this.shuffle();
     this.setSize();
+
+    this.dropdown.addEventListener("click", function(event) {
+        event.preventDefault();
+        this.restart(document.getElementById(this.id).querySelector(".content"));
+    }.bind(this));
 };
 
 /**
@@ -199,6 +204,21 @@ Memory.prototype.endGame = function() {
     let message = document.getElementById(this.id).querySelector(".message");
 
     message.textContent = "You finished the game!";
+};
+
+/**
+ * Restarts the Memory game.
+ *
+ * @param {Element} container - The container to remove elements from.
+ */
+Memory.prototype.restart = function(container) {
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    this.pairs = 0;
+    this.nrOfClicks = 0;
+    this.start();
 };
 
 /**
