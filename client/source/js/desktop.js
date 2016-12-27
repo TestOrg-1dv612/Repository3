@@ -26,6 +26,10 @@ function desktopClock(container) {
         mins = "0" + mins;
     }
 
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+
     container.textContent = hours + ":" + mins;
 }
 
@@ -50,6 +54,8 @@ function info(element) {
     let container = document.getElementById(element.id).querySelector(".content");
 
     container.appendChild(document.importNode(template, true));
+    let menu = document.getElementById(element.id).querySelector(".menu");
+    menu.parentNode.removeChild(menu);
 }
 
 /**
