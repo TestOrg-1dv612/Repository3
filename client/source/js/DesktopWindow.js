@@ -46,6 +46,19 @@ function DesktopWindow(id) {
     });
 
     /**
+     * Gets DesktopWindow's dropdown link in menu.
+     *
+     * @private
+     * @type {Element}
+     * @name DesktopWindow#dropdown
+     */
+    Object.defineProperty(this, "dropdown", {
+        get: function() {
+            return document.getElementById(this.id).querySelector(".dropdown a");
+        }
+    });
+
+    /**
      * Gets DesktopWindow's id.
      *
      * @private

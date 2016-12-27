@@ -42,9 +42,8 @@ Chat.prototype.open = function() {
 
     let messageInput = document.getElementById(this.id).querySelector(".chatMessage");
     let userInfo = document.getElementById(this.id).querySelector(".user");
-    this.setUser(userInfo);
+    this.getUser(userInfo);
 
-    console.log(this.user);
     messageInput.addEventListener("keypress", function(event) {
         if (event.keyCode === 13 || event.which === 13) {
             event.preventDefault();
@@ -68,30 +67,46 @@ Chat.prototype.open = function() {
 };
 
 /**
- * Sets the user for the chat application.
+ * Gets the user for the chat application.
  *
  * @param {Element} div - The div holding the user information.
  */
-Chat.prototype.setUser = function(div) {
+Chat.prototype.getUser = function(div) {
+    let input = div.firstElementChild;
+    let button = div.lastElementChild;
     let removeUserElem = function() {
-        div.removeChild(div.firstElementChild);
-        div.removeChild(div.lastElementChild);
+        div.removeChild(input);
+        div.removeChild(button);
         div.classList.add("loggedIn");
         div.textContent = "Logged in as " + this.user;
     }.bind(this);
 
+    let getUsername = function () {
+        if (div.firstElementChild.value) {
+            this.user = div.firstElementChild.value;
+            input.classList.remove("redbg");
+            input.value = "";
+            removeUserElem();
+            storage.set(this.user);
+        }
+    }.bind(this);
+
     if (!storage.get("username")) {
-        div.lastElementChild.addEventListener("click", function() {
-            if (div.firstElementChild.value) {
-                this.user = div.firstElementChild.value;
-                removeUserElem();
-                storage.set(this.user);
-            }
-        }.bind(this));
+        div.lastElementChild.addEventListener("click", getUsername);
     } else {
         this.user = storage.get("username");
         removeUserElem();
     }
+
+    this.dropdown.textContent = "Change user";
+    this.dropdown.addEventListener("click", function() {
+        div.textContent = "User: ";
+        div.classList.remove("loggedIn");
+        div.appendChild(input);
+        div.appendChild(button);
+        this.user = "Unknown";
+        div.lastElementChild.addEventListener("click", getUsername);
+    }.bind(this));
 };
 
 /**
