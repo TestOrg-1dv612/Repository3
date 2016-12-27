@@ -8,6 +8,7 @@
 "use strict";
 
 const DesktopWindow = require("./DesktopWindow");
+const storage = require("./localstorage");
 
 /**
  * Creates an instance of a Chat.
@@ -15,10 +16,10 @@ const DesktopWindow = require("./DesktopWindow");
  * @constructor
  * @param {String} id - The id of the window.
  */
-function Chat(id) {
+function Chat(id, user) {
     DesktopWindow.call(this, id);
 
-    this.user = "Unknown";
+    this.user = user || "Unknown";
     this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
     this.open();
 }
@@ -32,7 +33,7 @@ Chat.prototype = Object.create(DesktopWindow.prototype);
 Chat.prototype.constructor = Chat;
 
 /**
- *
+ * Initiates the application.
  */
 Chat.prototype.open = function() {
     let template = document.querySelector("#chat").content;
@@ -40,26 +41,20 @@ Chat.prototype.open = function() {
     document.getElementById(this.id).querySelector(".content").appendChild(content);
 
     let messageInput = document.getElementById(this.id).querySelector(".chatMessage");
-    let userMessage = document.getElementById(this.id).querySelector(".user");
+    let userInfo = document.getElementById(this.id).querySelector(".user");
+    this.setUser(userInfo);
 
-    if (this.user === "Unknown") {
-        userMessage.lastElementChild.addEventListener("click", function() {
-            if (userMessage.firstElementChild.value) {
-                this.user = userMessage.firstElementChild.value;
-                userMessage.removeChild(userMessage.firstElementChild);
-                userMessage.removeChild(userMessage.lastElementChild);
-                userMessage.classList.add("loggedIn");
-                userMessage.textContent = "Logged in as " + this.user;
-
-            }
-        }.bind(this));
-    }
-
+    console.log(this.user);
     messageInput.addEventListener("keypress", function(event) {
         if (event.keyCode === 13 || event.which === 13) {
             event.preventDefault();
-            this.send(messageInput.value);
-            messageInput.value = "";
+
+            if (this.user !== "Unknown") {
+                this.send(messageInput.value);
+                messageInput.value = "";
+            } else {
+                userInfo.firstElementChild.classList.add("redbg");
+            }
         }
     }.bind(this));
 
@@ -70,7 +65,33 @@ Chat.prototype.open = function() {
             this.receive(data);
         }
     }.bind(this));
+};
 
+/**
+ * Sets the user for the chat application.
+ *
+ * @param {Element} div - The div holding the user information.
+ */
+Chat.prototype.setUser = function(div) {
+    let removeUserElem = function() {
+        div.removeChild(div.firstElementChild);
+        div.removeChild(div.lastElementChild);
+        div.classList.add("loggedIn");
+        div.textContent = "Logged in as " + this.user;
+    }.bind(this);
+
+    if (!storage.get("username")) {
+        div.lastElementChild.addEventListener("click", function() {
+            if (div.firstElementChild.value) {
+                this.user = div.firstElementChild.value;
+                removeUserElem();
+                storage.set(this.user);
+            }
+        }.bind(this));
+    } else {
+        this.user = storage.get("username");
+        removeUserElem();
+    }
 };
 
 /**
