@@ -60,16 +60,59 @@ Memory.prototype = Object.create(DesktopWindow.prototype);
 Memory.prototype.constructor = Memory;
 
 /**
- * Starts the game.
+ * Starts the game and adds event listeners.
  */
 Memory.prototype.start = function() {
     this.shuffle();
     this.setSize();
+    this.setMenu();
 
     this.dropdown.addEventListener("click", function(event) {
         event.preventDefault();
-        this.restart(document.getElementById(this.id).querySelector(".content"));
+        this.restart();
     }.bind(this));
+
+    let links = document.getElementById(this.id).querySelectorAll(".menulink")[1].querySelectorAll(".dropdown a");
+    links.forEach(function(current) {
+        current.addEventListener("click", function(event) {
+            event.preventDefault();
+            switch (event.target.textContent) {
+                case "3x2":
+                    this.size = 6;
+                    break;
+                case "4x3":
+                    this.size = 12;
+                    break;
+                case "4x4":
+                    this.size = 16;
+                    break;
+            }
+
+            this.restart();
+        }.bind(this));
+    }.bind(this));
+};
+
+/**
+ * Sets elements for the drop-down menu to allow changing size of the board.
+ */
+Memory.prototype.setMenu = function() {
+    let element = document.getElementById(this.id).querySelector(".menulink");
+    let menuClone = element.cloneNode(true);
+    element.parentNode.appendChild(menuClone);
+
+    let newLink = document.getElementById(this.id).querySelectorAll(".menulink")[1];
+    newLink.firstElementChild.textContent = "Size";
+
+    for (let i = 0; i < 2; i += 1) {
+        let dropdownClone = newLink.querySelector(".dropdown a").cloneNode(true);
+        newLink.lastElementChild.appendChild(dropdownClone);
+    }
+
+    let dropdownLinks = newLink.querySelectorAll(".dropdown a");
+    dropdownLinks[0].textContent = "3x2";
+    dropdownLinks[1].textContent = "4x3";
+    dropdownLinks[2].textContent = "4x4";
 };
 
 /**
@@ -81,11 +124,11 @@ Memory.prototype.setSize = function() {
     let resultElem = document.importNode(templateDiv.lastElementChild, true);
 
     switch (this.size) {
-        case 4:
-            div.classList.add("board4");
-            break;
         case 6:
             div.classList.add("board6");
+            break;
+        case 12:
+            div.classList.add("board12");
             break;
         case 16:
             div.classList.add("board16");
@@ -93,7 +136,6 @@ Memory.prototype.setSize = function() {
     }
 
     let a;
-    let _this = this;
     this.images.forEach(function(image, index) {
         a = document.importNode(templateDiv.firstElementChild.firstElementChild, true);
         a.firstElementChild.setAttribute("data-brickNr", index);
@@ -106,7 +148,7 @@ Memory.prototype.setSize = function() {
 
         let img = (event.target.nodeName === "IMG") ? event.target : event.target.firstElementChild;
         let index = parseInt(img.getAttribute("data-brickNr"));
-        _this.turnBrick(this.images[index], index, img);
+        this.turnBrick(this.images[index], index, img);
     }.bind(this));
 
     document.getElementById(this.id).querySelector(".content").appendChild(div);
@@ -124,11 +166,11 @@ Memory.prototype.shuffle = function() {
     let imgs;
 
     switch (this.size) {
-        case 4:
-            imgs = this.images.slice(0, 4);
-            break;
         case 6:
             imgs = this.images.slice(0, 6);
+            break;
+        case 12:
+            imgs = this.images.slice(0, 12);
             break;
         default:
         case 16:
@@ -207,18 +249,18 @@ Memory.prototype.endGame = function() {
 };
 
 /**
- * Restarts the Memory game.
- *
- * @param {Element} container - The container to remove elements from.
+ * Restarts and clears the Memory game.
  */
-Memory.prototype.restart = function(container) {
+Memory.prototype.restart = function() {
+    let container = document.getElementById(this.id).querySelector(".content");
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
 
     this.pairs = 0;
     this.nrOfClicks = 0;
-    this.start();
+    this.shuffle();
+    this.setSize();
 };
 
 /**

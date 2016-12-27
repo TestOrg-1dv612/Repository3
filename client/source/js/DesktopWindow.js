@@ -54,7 +54,7 @@ function DesktopWindow(id) {
      */
     Object.defineProperty(this, "dropdown", {
         get: function() {
-            return document.getElementById(this.id).querySelector(".dropdown a");
+            return document.getElementById(this.id).querySelectorAll(".dropdown a")[0];
         }
     });
 
