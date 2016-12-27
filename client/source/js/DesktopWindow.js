@@ -81,18 +81,18 @@ DesktopWindow.prototype.create = function() {
     this.position(id, div);
     this.handleMovement(div);
 
-    div.addEventListener("click", function(event) {
+    div.querySelector(".content").addEventListener("click", function(event) {
         if (div !== div.parentNode.lastElementChild) {
             div.parentNode.appendChild(div);
         }
 
-        if (event.target === div.querySelector(".close")) {
-            event.preventDefault();
-            this.close(div);
+        if (event.target === document.getElementById(this.id).querySelector("textarea") ||
+            event.target === document.getElementById(this.id).querySelector("input")) {
+            event.target.focus();
         }
 
-        if (document.getElementById(this.id).querySelector(".messageContainer")) {
-            let container = document.getElementById(this.id).querySelector(".messageContainer");
+        let container = document.getElementById(this.id).querySelector(".messageContainer");
+        if (container) {
             container.scrollTop = container.scrollHeight - container.clientHeight;
         }
     }.bind(this));
@@ -143,11 +143,17 @@ DesktopWindow.prototype.handleMovement = function(div) {
 
     let getPosition = function(event) {
         event.preventDefault();
+
+        if (event.target === div.querySelector(".close")) {
+            this.close(div);
+            return;
+        }
+
         div.parentNode.appendChild(div);
         posX = event.clientX - div.offsetLeft;
         posY = event.clientY - div.offsetTop;
         window.addEventListener("mousemove", moveWindow);
-    };
+    }.bind(this);
 
     div.firstElementChild.addEventListener("mousedown", getPosition);
 
@@ -163,6 +169,10 @@ DesktopWindow.prototype.handleMovement = function(div) {
  */
 DesktopWindow.prototype.close = function(element) {
     element.parentNode.removeChild(element);
+
+    if (this.socket) {
+        this.socket.close();
+    }
 };
 
 /**

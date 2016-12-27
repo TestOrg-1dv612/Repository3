@@ -18,7 +18,7 @@ const DesktopWindow = require("./DesktopWindow");
 function Chat(id) {
     DesktopWindow.call(this, id);
 
-    this.user = null;
+    this.user = "Unknown";
     this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
     this.open();
 }
@@ -42,7 +42,7 @@ Chat.prototype.open = function() {
     let messageInput = document.getElementById(this.id).querySelector(".chatMessage");
     let userMessage = document.getElementById(this.id).querySelector(".user");
 
-    if (this.user === null) {
+    if (this.user === "Unknown") {
         userMessage.lastElementChild.addEventListener("click", function() {
             if (userMessage.firstElementChild.value) {
                 this.user = userMessage.firstElementChild.value;
