@@ -17,7 +17,7 @@ const DesktopWindow = require("./DesktopWindow");
  */
 function Remember(id) {
     DesktopWindow.call(this, id);
-
+    this.new();
 };
 
 /**
@@ -27,6 +27,15 @@ function Remember(id) {
  */
 Remember.prototype = Object.create(DesktopWindow.prototype);
 Remember.prototype.constructor = Remember;
+
+/**
+ * Creates a new note.
+ */
+Remember.prototype.new = function() {
+    let template = document.querySelector("#remember").content;
+    let content = document.importNode(template, true);
+    document.getElementById(this.id).querySelector(".content").appendChild(content);
+};
 
 /**
  * Exports.

@@ -79,7 +79,7 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 .redbg {background-color: #ef7f88;}
 .loggedIn {font-style: italic;}
 
-/* Classes relevant for Memory application*/
+/* Classes relevant for Memory application */
 .memoryResults {background-color: #faf7ec; border: 1px solid lightgrey; border-radius: 5px; padding: 5px 5px 5px 7px;
     font-size: 12px;}
 .brick {width: 50px; float: left; padding-left: 4px; padding-bottom: 4px;}
@@ -87,6 +87,11 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 .board12 {width: 216px; height: 166px; padding-bottom: 5px;}
 .board16 {width: 216px; height: 216px; padding-bottom: 5px;}
 .empty {visibility: hidden}
+
+/* Classes relevant for Remember application */
+.note {width: 250px; height: 250px; background-color: #ecedba; font-family: Chalkduster, sans-serif;
+    font-style: italic; color: indianred; padding: 10px; border-radius: 5px; margin-bottom: 10px;}
+.note-input {width: 210px;}
 
 /* General styles */
 p {line-height: 1.5em;}
