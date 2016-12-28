@@ -16,10 +16,10 @@ const storage = require("./localstorage");
  * @constructor
  * @param {String} id - The id of the window.
  */
-function Chat(id, user) {
+function Chat(id) {
     DesktopWindow.call(this, id);
 
-    this.user = user || "Unknown";
+    this.user = "Unknown";
     this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
     this.open();
 }
@@ -38,10 +38,10 @@ Chat.prototype.constructor = Chat;
 Chat.prototype.open = function() {
     let template = document.querySelector("#chat").content;
     let content = document.importNode(template, true);
-    document.getElementById(this.id).querySelector(".content").appendChild(content);
+    this.div.querySelector(".content").appendChild(content);
 
-    let messageInput = document.getElementById(this.id).querySelector(".chatMessage");
-    let userInfo = document.getElementById(this.id).querySelector(".user");
+    let messageInput = this.div.querySelector(".chatMessage");
+    let userInfo = this.div.querySelector(".user");
     this.getUser(userInfo);
 
     messageInput.addEventListener("keypress", function(event) {
@@ -132,7 +132,7 @@ Chat.prototype.send = function(input) {
  * @param {Object} data - The received data.
  */
 Chat.prototype.receive = function(data) {
-    let container = document.getElementById(this.id).querySelector(".messageContainer");
+    let container = this.div.querySelector(".messageContainer");
 
     let user = document.createElement("p");
     user.setAttribute("class", "username");

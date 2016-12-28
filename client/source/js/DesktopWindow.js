@@ -28,7 +28,7 @@ function DesktopWindow(id) {
      */
     Object.defineProperty(this, "name", {
         get: function() {
-            return document.getElementById(this.id).querySelector(".name");
+            return this.div.querySelector(".name");
         }
     });
 
@@ -41,7 +41,20 @@ function DesktopWindow(id) {
      */
     Object.defineProperty(this, "icon", {
         get: function() {
-            return document.getElementById(this.id).querySelector(".logo");
+            return this.div.querySelector(".logo");
+        }
+    });
+
+    /**
+     * Gets DesktopWindow's footer message element.
+     *
+     * @private
+     * @type {Element}
+     * @name DesktopWindow#message
+     */
+    Object.defineProperty(this, "message", {
+        get: function() {
+            return this.div.querySelector(".window-footer");
         }
     });
 
@@ -54,7 +67,20 @@ function DesktopWindow(id) {
      */
     Object.defineProperty(this, "dropdown", {
         get: function() {
-            return document.getElementById(this.id).querySelectorAll(".dropdown a")[0];
+            return this.div.querySelectorAll(".dropdown a")[0];
+        }
+    });
+
+    /**
+     * Gets the current DesktopWindow.
+     *
+     * @private
+     * @type {Element}
+     * @name DesktopWindow#div
+     */
+    Object.defineProperty(this, "div", {
+        get: function() {
+            return document.getElementById(this.id);
         }
     });
 
@@ -89,22 +115,21 @@ DesktopWindow.prototype.create = function() {
     document.querySelector("#unclaimed").id = this.id;
 
     let id = this.id.toString();
-    let div = document.getElementById(this.id);
 
-    this.position(id, div);
-    this.handleMovement(div);
+    this.position(id);
+    this.handleMovement();
 
-    div.querySelector(".content").addEventListener("click", function(event) {
-        if (div !== div.parentNode.lastElementChild) {
-            div.parentNode.appendChild(div);
+    this.div.querySelector(".content").addEventListener("click", function(event) {
+        if (this.div !== this.div.parentNode.lastElementChild) {
+            this.div.parentNode.appendChild(this.div);
         }
 
-        if (event.target === document.getElementById(this.id).querySelector("textarea") ||
-            event.target === document.getElementById(this.id).querySelector("input")) {
+        if (event.target === this.div.querySelector("textarea") ||
+            event.target === this.div.querySelector("input")) {
             event.target.focus();
         }
 
-        let container = document.getElementById(this.id).querySelector(".messageContainer");
+        let container = this.div.querySelector(".messageContainer");
         if (container) {
             container.scrollTop = container.scrollHeight - container.clientHeight;
         }
@@ -115,63 +140,60 @@ DesktopWindow.prototype.create = function() {
  * Positions the window in the desktop, stacks if necessary.
  *
  * @param {String} id - The id of the window.
- * @param {Element} div - The window element.
  */
-DesktopWindow.prototype.position = function(id, div) {
+DesktopWindow.prototype.position = function(id) {
     let stackWindows = function(app) {
         if (id.indexOf("1") === -1) {
             let idNr = id.charAt(1) - 1;
             if (document.getElementById(app + idNr)) {
                 let elementBefore = document.getElementById(app + idNr);
-                div.style.top = (elementBefore.offsetTop + 35) + "px";
-                div.style.left = (elementBefore.offsetLeft + 35) + "px";
+                this.div.style.top = (elementBefore.offsetTop + 35) + "px";
+                this.div.style.left = (elementBefore.offsetLeft + 35) + "px";
             }
         }
-    };
+    }.bind(this);
 
     if (id.indexOf("c") !== -1) {
         stackWindows("c");
     } else if (id.indexOf("m") !== -1) {
-        div.style.left = (div.offsetLeft + 200) + "px";
+        this.div.style.left = (this.div.offsetLeft + 200) + "px";
         stackWindows("m");
     } else if (id.indexOf("r") !== -1) {
-        div.style.left = (div.offsetLeft + 400) + "px";
+        this.div.style.left = (this.div.offsetLeft + 400) + "px";
         stackWindows("m");
     } else if (id.indexOf("i") !== -1) {
-        div.style.left = (div.offsetLeft + 600) + "px";
+        this.div.style.left = (this.div.offsetLeft + 600) + "px";
         stackWindows("i");
     }
 };
 
 /**
  * Handles dragging movements of the window.
- *
- * @param {Element} div - The div containing the window.
  */
-DesktopWindow.prototype.handleMovement = function(div) {
+DesktopWindow.prototype.handleMovement = function() {
     let posX = 0;
     let posY = 0;
 
     let moveWindow = function(event) {
-        div.style.top = (event.clientY - posY) + "px";
-        div.style.left = (event.clientX - posX) + "px";
-    };
+        this.div.style.top = (event.clientY - posY) + "px";
+        this.div.style.left = (event.clientX - posX) + "px";
+    }.bind(this);
 
     let getPosition = function(event) {
         event.preventDefault();
 
-        if (event.target === div.querySelector(".close")) {
-            this.close(div);
+        if (event.target === this.div.querySelector(".close")) {
+            this.close(this.div);
             return;
         }
 
-        div.parentNode.appendChild(div);
-        posX = event.clientX - div.offsetLeft;
-        posY = event.clientY - div.offsetTop;
+        this.div.parentNode.appendChild(this.div);
+        posX = event.clientX - this.div.offsetLeft;
+        posY = event.clientY - this.div.offsetTop;
         window.addEventListener("mousemove", moveWindow);
     }.bind(this);
 
-    div.firstElementChild.addEventListener("mousedown", getPosition);
+    this.div.firstElementChild.addEventListener("mousedown", getPosition);
 
     window.addEventListener("mouseup", function() {
         window.removeEventListener("mousemove", moveWindow);

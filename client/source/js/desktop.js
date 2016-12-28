@@ -52,10 +52,10 @@ function getDate(container) {
  */
 function info(element) {
     let template = document.querySelector("#info").content;
-    let container = document.getElementById(element.id).querySelector(".content");
+    let container = element.div.querySelector(".content");
 
     container.appendChild(document.importNode(template, true));
-    let menu = document.getElementById(element.id).querySelector(".menu");
+    let menu = element.div.querySelector(".menu");
     menu.parentNode.removeChild(menu);
 }
 

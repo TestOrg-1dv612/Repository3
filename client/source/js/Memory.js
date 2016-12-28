@@ -72,7 +72,7 @@ Memory.prototype.start = function() {
         this.restart();
     }.bind(this));
 
-    let links = document.getElementById(this.id).querySelectorAll(".menulink")[1].querySelectorAll(".dropdown a");
+    let links = this.div.querySelectorAll(".menulink")[1].querySelectorAll(".dropdown a");
     links.forEach(function(current) {
         current.addEventListener("click", function(event) {
             event.preventDefault();
@@ -97,11 +97,11 @@ Memory.prototype.start = function() {
  * Sets elements for the drop-down menu to allow changing size of the board.
  */
 Memory.prototype.setMenu = function() {
-    let element = document.getElementById(this.id).querySelector(".menulink");
+    let element = this.div.querySelector(".menulink");
     let menuClone = element.cloneNode(true);
     element.parentNode.appendChild(menuClone);
 
-    let newLink = document.getElementById(this.id).querySelectorAll(".menulink")[1];
+    let newLink = this.div.querySelectorAll(".menulink")[1];
     newLink.firstElementChild.textContent = "Size";
 
     for (let i = 0; i < 2; i += 1) {
@@ -151,8 +151,8 @@ Memory.prototype.setSize = function() {
         this.turnBrick(this.images[index], index, img);
     }.bind(this));
 
-    document.getElementById(this.id).querySelector(".content").appendChild(div);
-    document.getElementById(this.id).querySelector(".content").appendChild(resultElem);
+    this.div.querySelector(".content").appendChild(div);
+    this.div.querySelector(".content").appendChild(resultElem);
 };
 
 /**
@@ -209,12 +209,12 @@ Memory.prototype.turnBrick = function(brickImg, index, img) {
         }
 
         this.nrOfClicks += 1;
-        document.getElementById(this.id).querySelector(".tries").textContent = this.nrOfClicks.toString();
+        this.div.querySelector(".tries").textContent = this.nrOfClicks.toString();
 
         this.turn2 = img;
         if (this.turn1.src === this.turn2.src) {
             this.pairs += 1;
-            document.getElementById(this.id).querySelector(".pairs").textContent = this.pairs.toString();
+            this.div.querySelector(".pairs").textContent = this.pairs.toString();
 
             if (this.pairs === this.size / 2) {
                 this.endGame();
@@ -243,7 +243,7 @@ Memory.prototype.turnBrick = function(brickImg, index, img) {
  * Ends the game and displays message.
  */
 Memory.prototype.endGame = function() {
-    let message = document.getElementById(this.id).querySelector(".message");
+    let message = this.div.querySelector(".message");
 
     message.textContent = "You finished the game!";
 };
@@ -252,7 +252,7 @@ Memory.prototype.endGame = function() {
  * Restarts and clears the Memory game.
  */
 Memory.prototype.restart = function() {
-    let container = document.getElementById(this.id).querySelector(".content");
+    let container = this.div.querySelector(".content");
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
