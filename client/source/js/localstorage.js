@@ -11,19 +11,40 @@
  * Gets an item from local storage.
  *
  * @param {String} name - The name of the item to get.
- * @returns user - The set username.
+ * @returns item - The requested item
  */
 function get(name) {
-    return localStorage.getItem(name);
+    if (name === "notes") {
+        return JSON.parse(localStorage.getItem(name));
+    } else {
+        return localStorage.getItem(name);
+    }
 }
 
 /**
  * Sets an item in local storage.
  *
- * @param {Object} username - The name of the user.
+ * @param {String} itemName - The name of the item to set.
+ * @param item - The item.
  */
-function set(username) {
-    localStorage.setItem("username", username);
+function set(itemName, item) {
+    if (itemName === "notes") {
+        let notes;
+        if (get(itemName)) {
+            notes = get(itemName).notes;
+        } else {
+            notes = [];
+        }
+
+        notes.push(item);
+        let allNotes = {
+            notes: notes
+        };
+
+        localStorage.setItem(itemName, JSON.stringify(allNotes));
+    } else {
+        localStorage.setItem(itemName, item);
+    }
 }
 
 /**

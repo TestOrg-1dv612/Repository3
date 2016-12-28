@@ -87,7 +87,7 @@ Chat.prototype.getUser = function(div) {
             input.classList.remove("redbg");
             input.value = "";
             removeUserElem();
-            storage.set(this.user);
+            storage.set("username", this.user);
         }
     }.bind(this);
 
