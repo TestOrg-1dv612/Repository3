@@ -35,6 +35,30 @@ Remember.prototype.new = function() {
     let template = document.querySelector("#remember").content;
     let content = document.importNode(template, true);
     document.getElementById(this.id).querySelector(".content").appendChild(content);
+
+    let input = document.getElementById(this.id).querySelector(".note-input");
+    document.getElementById(this.id).querySelector("button").addEventListener("click", function() {
+        if (!input.value) {
+            input.classList.add("redbg");
+        } else {
+            input.classList.remove("redbg");
+            this.add(input.value);
+            input.value = "";
+        }
+    }.bind(this));
+
+    this.dropdown.textContent = "Save";
+};
+
+/**
+ * Adds input to the note.
+ *
+ * @param {String} input - User input from element.
+ */
+Remember.prototype.add = function(input) {
+    let noteElem = document.getElementById(this.id).querySelectorAll(".note p")[0].cloneNode(true);
+    noteElem.textContent = input;
+    document.getElementById(this.id).querySelector(".note").appendChild(noteElem);
 };
 
 /**

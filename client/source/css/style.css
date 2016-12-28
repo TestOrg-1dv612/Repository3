@@ -76,7 +76,6 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 .chatMessage {max-width: 97%; margin: 10px 0 10px 3px; font-family: Tahoma, sans-serif; font-size: 11px; resize: none;}
 .username {background-color: #edddb2; font-size: 10px; font-weight: bold;}
 .user {margin-left: 3px; font-size: 12px;}
-.redbg {background-color: #ef7f88;}
 .loggedIn {font-style: italic;}
 
 /* Classes relevant for Memory application */
@@ -89,10 +88,15 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 .empty {visibility: hidden}
 
 /* Classes relevant for Remember application */
-.note {width: 250px; height: 250px; background-color: #ecedba; font-family: Chalkduster, sans-serif;
-    font-style: italic; color: indianred; padding: 10px; border-radius: 5px; margin-bottom: 10px;}
+.note {width: 240px; height: 250px; background-color: #ecedba; font-family: Chalkduster, sans-serif;
+    font-style: italic; color: indianred; padding: 10px 15px; border-radius: 5px; margin-bottom: 10px;}
+.note p {border-bottom: 1px solid beige;}
+.note p:first-child {text-align: center; padding-bottom: 5px;}
+.note p:first-child:before {content: "";}
+.note p:before {content: "- "}
 .note-input {width: 210px;}
 
 /* General styles */
 p {line-height: 1.5em;}
 h3 {padding: 5px 0 10px 5px; font-family: Georgia, serif; font-size: 17px; color: #db525e;}
+.redbg {background-color: #ef7f88;}
