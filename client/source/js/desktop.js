@@ -7,6 +7,7 @@
 const DesktopWindow = require("./DesktopWindow");
 const Chat = require("./Chat");
 const Memory = require("./Memory");
+const Remember = require("./Remember");
 
 /**
  * Gets the current time and presents it in the given container.
@@ -65,6 +66,7 @@ function init() {
     let newWindow;
     let cNr = 1;
     let mNr = 1;
+    let rNr = 1;
     let iNr = 1;
     document.querySelectorAll("nav a").forEach(function(current, index) {
         switch (index){
@@ -87,6 +89,16 @@ function init() {
 
                 break;
             case 2:
+                current.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    newWindow = new Remember("r" + rNr);
+                    newWindow.name.textContent = "Remember";
+                    newWindow.icon.src = "/image/notes.png";
+                    rNr += 1;
+                });
+
+                break;
+            case 3:
                 current.addEventListener("click", function(event) {
                     event.preventDefault();
                     newWindow = new DesktopWindow("i" + iNr);
