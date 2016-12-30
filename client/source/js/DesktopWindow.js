@@ -160,7 +160,7 @@ DesktopWindow.prototype.position = function(id) {
         stackWindows("m");
     } else if (id.indexOf("r") !== -1) {
         this.div.style.left = (this.div.offsetLeft + 400) + "px";
-        stackWindows("m");
+        stackWindows("r");
     } else if (id.indexOf("i") !== -1) {
         this.div.style.left = (this.div.offsetLeft + 600) + "px";
         stackWindows("i");

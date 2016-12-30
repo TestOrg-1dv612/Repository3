@@ -45,6 +45,8 @@ Chat.prototype.open = function() {
     this.getUser(userInfo);
 
     messageInput.addEventListener("keypress", function(event) {
+        this.emojis(messageInput);
+
         if (event.keyCode === 13 || event.which === 13) {
             event.preventDefault();
 
@@ -144,6 +146,30 @@ Chat.prototype.receive = function(data) {
     container.appendChild(pElem);
 
     container.scrollTop = container.scrollHeight - container.clientHeight;
+};
+
+/**
+ * Replaces certain character combinations with emojis.
+ *
+ * @param element - The element containing the user input.
+ */
+Chat.prototype.emojis = function(element) {
+    let emojis = {
+        ":)": "\uD83D\uDE0A",
+        ";)": "\uD83D\uDE09",
+        ":D": "\uD83D\uDE00",
+        ":P": "\uD83D\uDE1B",
+        ";P": "\uD83D\uDE1C",
+        ":/": "\uD83D\uDE15",
+        ":(": "\uD83D\uDE1E",
+        ":'(": "\uD83D\uDE22",
+        "(y)": "\uD83D\uDC4D",
+        "<3": "\u2764\uFE0F"
+    };
+
+    for (let i in emojis) {
+        element.value = element.value.replace(i, emojis[i]);
+    }
 };
 
 /**
