@@ -19,8 +19,13 @@ const storage = require("./localstorage");
 function Remember(id) {
     DesktopWindow.call(this, id);
 
+    /**
+     * The array to hold the notes.
+     *
+     * @type {Array}
+     */
     this.notes = [];
-    this.nr = 1;
+
     this.new();
 }
 
@@ -75,7 +80,6 @@ Remember.prototype.new = function(notFirst) {
             event.preventDefault();
             if (this.div.querySelectorAll(".note p").length > 1) {
                 this.save();
-                this.message.textContent = "";
             } else {
                 this.message.textContent = "Note is empty.";
             }
@@ -151,8 +155,7 @@ Remember.prototype.save = function(oldNotes) {
         newLink.lastElementChild.appendChild(dropdownClone);
 
         dropdownLink = newLink.querySelector(".dropdown").lastElementChild;
-        dropdownLink.textContent = "Note" + this.nr;
-        this.nr += 1;
+        dropdownLink.textContent = "Note " + (newLink.querySelectorAll(".dropdown a").length);
 
         dropdownLink.addEventListener("click", function(event) {
             event.preventDefault();
@@ -171,7 +174,7 @@ Remember.prototype.save = function(oldNotes) {
             addMenuNote();
         }.bind(this));
     } else {
-        if (notes === 0 || notes.length < 4) {
+        if (notes === 0 || notes.length <= 4) {
             storage.set("notes", this.notes);
             addMenuNote();
             this.new(true);
