@@ -157,7 +157,7 @@ Chat.prototype.emojis = function(element) {
     let emojis = {
         ":)": "\uD83D\uDE0A",
         ";)": "\uD83D\uDE09",
-        ":D": "\uD83D\uDE00",
+        ":D": "\uD83D\uDE03",
         ":P": "\uD83D\uDE1B",
         ";P": "\uD83D\uDE1C",
         ":/": "\uD83D\uDE15",

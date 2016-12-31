@@ -68,7 +68,7 @@ function init() {
     let mNr = 1;
     let rNr = 1;
     let iNr = 1;
-    document.querySelectorAll("nav a").forEach(function(current, index) {
+    document.querySelectorAll("nav .icons").forEach(function(current, index) {
         switch (index){
             case 0:
                 current.addEventListener("click", function(event) {

@@ -185,6 +185,9 @@ DesktopWindow.prototype.handleMovement = function() {
         if (event.target === this.div.querySelector(".close")) {
             this.close(this.div);
             return;
+        } else if (event.target === this.div.querySelector(".minimize")) {
+            this.minimize();
+            return;
         }
 
         this.div.parentNode.appendChild(this.div);
@@ -198,6 +201,44 @@ DesktopWindow.prototype.handleMovement = function() {
     window.addEventListener("mouseup", function() {
         window.removeEventListener("mousemove", moveWindow);
     });
+};
+
+/**
+ * Minimizes window, or maximizes if clicked on the reference.
+ */
+DesktopWindow.prototype.minimize = function() {
+    this.div.style.visibility = "hidden";
+
+    let aTag = document.createElement("a");
+    aTag.setAttribute("href", "#");
+
+    let addWindow = function(iconMenu, app) {
+        iconMenu.appendChild(aTag);
+        iconMenu.classList.add("minimized");
+        iconMenu.lastElementChild.textContent = app + " " + (this.id.charAt(1));
+
+        iconMenu.lastElementChild.addEventListener("click", function(event) {
+            event.preventDefault();
+            this.div.style.visibility = "visible";
+            iconMenu.removeChild(event.target);
+
+            if (!iconMenu.firstElementChild) {
+                iconMenu.classList.remove("minimized");
+            }
+        }.bind(this));
+    }.bind(this);
+
+    let iconMenus = document.querySelectorAll("nav .icon-menu");
+
+    if (this.id.indexOf("c") !== -1) {
+        addWindow(iconMenus[0], "Chat");
+    } else if (this.id.indexOf("m") !== -1) {
+        addWindow(iconMenus[1], "Memory");
+    } else if (this.id.indexOf("r") !== -1) {
+        addWindow(iconMenus[2], "Remember");
+    } else if (this.id.indexOf("i") !== -1) {
+        addWindow(iconMenus[3], "Info");
+    }
 };
 
 /**
