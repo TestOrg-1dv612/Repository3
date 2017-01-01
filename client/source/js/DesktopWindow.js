@@ -119,7 +119,7 @@ DesktopWindow.prototype.create = function() {
     this.position(id);
     this.handleMovement();
 
-    this.div.querySelector(".content").addEventListener("click", function(event) {
+    this.div.querySelector(".content").addEventListener("click", (event) => {
         if (this.div !== this.div.parentNode.lastElementChild) {
             this.div.parentNode.appendChild(this.div);
         }
@@ -133,7 +133,7 @@ DesktopWindow.prototype.create = function() {
         if (container) {
             container.scrollTop = container.scrollHeight - container.clientHeight;
         }
-    }.bind(this));
+    });
 };
 
 /**
@@ -142,7 +142,7 @@ DesktopWindow.prototype.create = function() {
  * @param {String} id - The id of the window.
  */
 DesktopWindow.prototype.position = function(id) {
-    let stackWindows = function(app) {
+    let stackWindows = (app) => {
         if (id.indexOf("1") === -1) {
             let idNr = id.charAt(1) - 1;
             if (document.getElementById(app + idNr)) {
@@ -151,7 +151,7 @@ DesktopWindow.prototype.position = function(id) {
                 this.div.style.left = (elementBefore.offsetLeft + 35) + "px";
             }
         }
-    }.bind(this);
+    };
 
     if (id.indexOf("c") !== -1) {
         stackWindows("c");
@@ -174,20 +174,20 @@ DesktopWindow.prototype.handleMovement = function() {
     let posX = 0;
     let posY = 0;
 
-    let scrollUp = function() {
+    let scrollUp = () => {
         let container = this.div.querySelector(".messageContainer");
         if (container) {
             container.scrollTop = container.scrollHeight - container.clientHeight;
         }
-    }.bind(this);
+    };
 
-    let moveWindow = function(event) {
+    let moveWindow = (event) => {
         this.div.style.top = (event.clientY - posY) + "px";
         this.div.style.left = (event.clientX - posX) + "px";
         scrollUp(this.div.querySelector(".messageContainer"));
-    }.bind(this);
+    };
 
-    let getPosition = function(event) {
+    let getPosition = (event) => {
         event.preventDefault();
 
         if (event.target === this.div.querySelector(".close")) {
@@ -203,11 +203,11 @@ DesktopWindow.prototype.handleMovement = function() {
         posY = event.clientY - this.div.offsetTop;
         window.addEventListener("mousemove", moveWindow);
         scrollUp();
-    }.bind(this);
+    };
 
     this.div.firstElementChild.addEventListener("mousedown", getPosition);
 
-    window.addEventListener("mouseup", function() {
+    window.addEventListener("mouseup", () => {
         window.removeEventListener("mousemove", moveWindow);
     });
 };
@@ -221,12 +221,12 @@ DesktopWindow.prototype.minimize = function() {
     let aTag = document.createElement("a");
     aTag.setAttribute("href", "#");
 
-    let addWindow = function(iconMenu, app) {
+    let addWindow = (iconMenu, app) => {
         iconMenu.appendChild(aTag);
         iconMenu.classList.add("minimized");
         iconMenu.lastElementChild.textContent = app + " " + (this.id.charAt(1));
 
-        iconMenu.lastElementChild.addEventListener("click", function(event) {
+        iconMenu.lastElementChild.addEventListener("click", (event) => {
             event.preventDefault();
             this.div.style.visibility = "visible";
             iconMenu.removeChild(event.target);
@@ -234,8 +234,8 @@ DesktopWindow.prototype.minimize = function() {
             if (!iconMenu.firstElementChild) {
                 iconMenu.classList.remove("minimized");
             }
-        }.bind(this));
-    }.bind(this);
+        });
+    };
 
     let iconMenus = document.querySelectorAll("nav .icon-menu");
 

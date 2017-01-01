@@ -68,10 +68,10 @@ function init() {
     let mNr = 1;
     let rNr = 1;
     let iNr = 1;
-    document.querySelectorAll("nav .icons").forEach(function(current, index) {
+    document.querySelectorAll("nav .icons").forEach((current, index) => {
         switch (index){
             case 0:
-                current.addEventListener("click", function(event) {
+                current.addEventListener("click", (event) => {
                     event.preventDefault();
                     newWindow = new Chat("c" + cNr);
                     newWindow.name.textContent = "Chat";
@@ -81,7 +81,7 @@ function init() {
 
                 break;
             case 1:
-                current.addEventListener("click", function(event) {
+                current.addEventListener("click", (event) => {
                     event.preventDefault();
                     newWindow = new Memory("m" + mNr);
                     mNr += 1;
@@ -89,7 +89,7 @@ function init() {
 
                 break;
             case 2:
-                current.addEventListener("click", function(event) {
+                current.addEventListener("click", (event) => {
                     event.preventDefault();
                     newWindow = new Remember("r" + rNr);
                     newWindow.name.textContent = "Remember";
@@ -99,7 +99,7 @@ function init() {
 
                 break;
             case 3:
-                current.addEventListener("click", function(event) {
+                current.addEventListener("click", (event) => {
                     event.preventDefault();
                     newWindow = new DesktopWindow("i" + iNr);
                     newWindow.name.textContent = "Application info";
