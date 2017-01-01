@@ -21,8 +21,6 @@ function Remember(id) {
 
     /**
      * The array to hold the notes.
-     *
-     * @type {Array}
      */
     this.notes = [];
 
@@ -57,7 +55,7 @@ Remember.prototype.new = function(notFirst) {
     this.div.querySelector(".content").appendChild(content);
 
     let input = this.div.querySelector(".note-input");
-    this.div.querySelector("button").addEventListener("click", function() {
+    this.div.querySelector("button").addEventListener("click", () => {
         if (!input.value) {
             input.classList.add("redbg");
             this.message.textContent = "You need to write an item for the list.";
@@ -67,7 +65,7 @@ Remember.prototype.new = function(notFirst) {
             this.add(input.value);
             input.value = "";
         }
-    }.bind(this));
+    });
 
     if (!notFirst) {
         this.setMenu();
@@ -76,14 +74,14 @@ Remember.prototype.new = function(notFirst) {
         }
 
         this.dropdown.textContent = "Save";
-        this.dropdown.addEventListener("click", function(event) {
+        this.dropdown.addEventListener("click", (event) => {
             event.preventDefault();
             if (this.div.querySelectorAll(".note p").length > 1) {
                 this.save();
             } else {
                 this.message.textContent = "Note is empty.";
             }
-        }.bind(this));
+        });
     }
 };
 
@@ -108,12 +106,12 @@ Remember.prototype.setMenu = function() {
     dropdownLinks[1].textContent = "New";
     dropdownLinks[2].textContent = "Delete All";
 
-    dropdownLinks[1].addEventListener("click", function(event) {
+    dropdownLinks[1].addEventListener("click", (event) => {
         event.preventDefault();
         this.new(true);
-    }.bind(this));
+    });
 
-    dropdownLinks[2].addEventListener("click", function(event) {
+    dropdownLinks[2].addEventListener("click", (event) => {
         event.preventDefault();
         localStorage.removeItem("notes");
 
@@ -123,7 +121,7 @@ Remember.prototype.setMenu = function() {
         }
 
         this.new(true);
-    }.bind(this));
+    });
 };
 
 /**
@@ -148,31 +146,26 @@ Remember.prototype.save = function(oldNotes) {
     let newLink;
     let dropdownLink;
 
-    let addMenuNote = function() {
+    let addMenuNote = () => {
         newLink = this.div.querySelectorAll(".menulink")[1];
-        let dropdownClone = this.div.querySelectorAll(".menulink")[0].
-            querySelector(".dropdown a").cloneNode(true);
+        let dropdownClone = this.div.querySelectorAll(".menulink")[0].querySelector(".dropdown a").cloneNode(true);
         newLink.lastElementChild.appendChild(dropdownClone);
 
         dropdownLink = newLink.querySelector(".dropdown").lastElementChild;
         dropdownLink.textContent = "Note " + (newLink.querySelectorAll(".dropdown a").length);
 
-        dropdownLink.addEventListener("click", function(event) {
+        dropdownLink.addEventListener("click", (event) => {
             event.preventDefault();
             let nr = event.target.textContent.charAt(event.target.textContent.length - 1);
-            if (nr === 0) {
-                nr = 9;
-            }
-
             this.get(nr);
-        }.bind(this));
-    }.bind(this);
+        });
+    };
 
     let notes = (storage.get("notes") === null) ? 0 : storage.get("notes").notes;
     if (oldNotes) {
-        notes.forEach(function() {
+        notes.forEach(() => {
             addMenuNote();
-        }.bind(this));
+        });
     } else {
         if (notes === 0 || notes.length <= 4) {
             storage.set("notes", this.notes);
@@ -202,11 +195,11 @@ Remember.prototype.get = function(nr) {
     let content = document.importNode(template.firstElementChild.firstElementChild, true);
     container.appendChild(content);
 
-    noteContent.forEach(function(current) {
+    noteContent.forEach((current) => {
         let noteElem = this.div.querySelectorAll(".note p")[0].cloneNode(true);
         noteElem.textContent = current;
         container.appendChild(noteElem);
-    }.bind(this));
+    });
 };
 
 /**

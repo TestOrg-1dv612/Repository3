@@ -67,14 +67,14 @@ Memory.prototype.start = function() {
     this.setSize();
     this.setMenu();
 
-    this.dropdown.addEventListener("click", function(event) {
+    this.dropdown.addEventListener("click", (event) => {
         event.preventDefault();
         this.restart();
-    }.bind(this));
+    });
 
     let links = this.div.querySelectorAll(".menulink")[1].querySelectorAll(".dropdown a");
-    links.forEach(function(current) {
-        current.addEventListener("click", function(event) {
+    links.forEach((current) => {
+        current.addEventListener("click", (event) => {
             event.preventDefault();
             switch (event.target.textContent) {
                 case "3x2":
@@ -89,8 +89,8 @@ Memory.prototype.start = function() {
             }
 
             this.restart();
-        }.bind(this));
-    }.bind(this));
+        });
+    });
 };
 
 /**
@@ -136,14 +136,14 @@ Memory.prototype.setSize = function() {
     }
 
     let a;
-    this.images.forEach(function(image, index) {
+    this.images.forEach((image, index) => {
         a = document.importNode(templateDiv.firstElementChild.firstElementChild, true);
         a.firstElementChild.setAttribute("data-brickNr", index);
         div.appendChild(a);
 
     });
 
-    div.addEventListener("click", function(event) {
+    div.addEventListener("click", (event) => {
         event.preventDefault();
 
         let img;
@@ -159,9 +159,9 @@ Memory.prototype.setSize = function() {
 
         if (img) {
             let index = parseInt(img.getAttribute("data-brickNr"));
-            this.turnBrick(this.images[index], index, img);
+            this.turnBrick(this.images[index], img);
         }
-    }.bind(this));
+    });
 
     this.div.querySelector(".content").appendChild(div);
     this.div.querySelector(".content").appendChild(resultElem);
@@ -206,7 +206,7 @@ Memory.prototype.shuffle = function() {
  * @param {Number} index - The index of the turned brick.
  * @param {Element} img - The element containing the brick.
  */
-Memory.prototype.turnBrick = function(brickImg, index, img) {
+Memory.prototype.turnBrick = function(brickImg, img) {
     if (this.turn2) {
         return;
     }
@@ -232,21 +232,21 @@ Memory.prototype.turnBrick = function(brickImg, index, img) {
                 this.endGame();
             }
 
-            setTimeout(function() {
+            setTimeout(() => {
                 this.turn1.parentNode.classList.add("empty");
                 this.turn2.parentNode.classList.add("empty");
 
                 this.turn1 = null;
                 this.turn2 = null;
-            }.bind(this), 400);
+            }, 400);
         } else {
-            setTimeout(function() {
+            setTimeout(() => {
                 this.turn1.src = "/image/memory/0.png";
                 this.turn2.src = "/image/memory/0.png";
 
                 this.turn1 = null;
                 this.turn2 = null;
-            }.bind(this), 500);
+            }, 500);
         }
     }
 };
