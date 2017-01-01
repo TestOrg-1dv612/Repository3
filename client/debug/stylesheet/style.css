@@ -96,7 +96,7 @@ footer p {float: right; padding: 5px 20px 0 0; font-family: Arial, sans-serif;}
 .board6 {width: 166px; height: 116px; padding-bottom: 5px;}
 .board12 {width: 216px; height: 166px; padding-bottom: 5px;}
 .board16 {width: 216px; height: 216px; padding-bottom: 5px;}
-.empty {visibility: hidden}
+.empty {visibility: hidden;}
 
 /* Classes relevant for Remember application */
 .note {width: 240px; height: 250px; background-color: #ecedba; font-family: Chalkduster, sans-serif;

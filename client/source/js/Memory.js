@@ -146,9 +146,21 @@ Memory.prototype.setSize = function() {
     div.addEventListener("click", function(event) {
         event.preventDefault();
 
-        let img = (event.target.nodeName === "IMG") ? event.target : event.target.firstElementChild;
-        let index = parseInt(img.getAttribute("data-brickNr"));
-        this.turnBrick(this.images[index], index, img);
+        let img;
+        if (event.target.tagName === "A") {
+            if (event.target.firstElementChild) {
+                img = event.target.firstElementChild;
+            } else {
+                return;
+            }
+        } else if (event.target.tagName === "IMG") {
+            img = event.target;
+        }
+
+        if (img) {
+            let index = parseInt(img.getAttribute("data-brickNr"));
+            this.turnBrick(this.images[index], index, img);
+        }
     }.bind(this));
 
     this.div.querySelector(".content").appendChild(div);
