@@ -29,14 +29,9 @@ function get(name) {
  */
 function set(itemName, item) {
     if (itemName === "notes") {
-        let notes;
-        if (get(itemName)) {
-            notes = get(itemName).notes;
-        } else {
-            notes = [];
-        }
-
+        let notes = (get(itemName)) ? get(itemName).notes : [];
         notes.push(item);
+
         let allNotes = {
             notes: notes
         };

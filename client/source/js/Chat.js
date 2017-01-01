@@ -19,8 +19,16 @@ const storage = require("./localstorage");
 function Chat(id) {
     DesktopWindow.call(this, id);
 
+    /**
+     * The name of the user. "Unknown" by default.
+     */
     this.user = "Unknown";
+
+    /**
+     * The web socket for the chat.
+     */
     this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
+
     this.open();
 }
 
@@ -44,7 +52,7 @@ Chat.prototype.open = function() {
     let userInfo = this.div.querySelector(".user");
     this.getUser(userInfo);
 
-    messageInput.addEventListener("keypress", function(event) {
+    messageInput.addEventListener("keypress", (event) => {
         this.emojis(messageInput);
 
         if (event.keyCode === 13 || event.which === 13) {
@@ -62,15 +70,15 @@ Chat.prototype.open = function() {
                 userInfo.firstElementChild.classList.add("redbg");
             }
         }
-    }.bind(this));
+    });
 
-    this.socket.addEventListener("message", function(event) {
+    this.socket.addEventListener("message", (event) => {
         let data = JSON.parse(event.data);
 
         if (data.type === "message" || data.type === "notification") {
             this.receive(data);
         }
-    }.bind(this));
+    });
 };
 
 /**
@@ -81,14 +89,15 @@ Chat.prototype.open = function() {
 Chat.prototype.getUser = function(div) {
     let input = div.firstElementChild;
     let button = div.lastElementChild;
-    let removeUserElem = function() {
+
+    let removeUserElem = () => {
         div.removeChild(input);
         div.removeChild(button);
         div.classList.add("loggedIn");
         div.textContent = "Logged in as " + this.user;
-    }.bind(this);
+    };
 
-    let getUsername = function() {
+    let getUsername = () => {
         if (div.firstElementChild.value) {
             this.user = div.firstElementChild.value;
             input.classList.remove("redbg");
@@ -96,7 +105,7 @@ Chat.prototype.getUser = function(div) {
             removeUserElem();
             storage.set("username", this.user);
         }
-    }.bind(this);
+    };
 
     if (!storage.get("username")) {
         div.lastElementChild.addEventListener("click", getUsername);
@@ -106,7 +115,7 @@ Chat.prototype.getUser = function(div) {
     }
 
     this.dropdown.textContent = "Change user";
-    this.dropdown.addEventListener("click", function(event) {
+    this.dropdown.addEventListener("click", (event) => {
         event.preventDefault();
         div.textContent = "User: ";
         div.classList.remove("loggedIn");
@@ -114,7 +123,7 @@ Chat.prototype.getUser = function(div) {
         div.appendChild(button);
         this.user = "Unknown";
         div.lastElementChild.addEventListener("click", getUsername);
-    }.bind(this));
+    });
 };
 
 /**
