@@ -51,8 +51,13 @@ Chat.prototype.open = function() {
             event.preventDefault();
 
             if (this.user !== "Unknown") {
-                this.send(messageInput.value);
-                messageInput.value = "";
+                if (!messageInput.value || messageInput.value.trim() === "") {
+                    this.message.textContent = "Write your message.";
+                } else {
+                    this.send(messageInput.value);
+                    messageInput.value = "";
+                    this.message.textContent = "";
+                }
             } else {
                 userInfo.firstElementChild.classList.add("redbg");
             }

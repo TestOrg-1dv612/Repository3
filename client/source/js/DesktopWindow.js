@@ -174,9 +174,17 @@ DesktopWindow.prototype.handleMovement = function() {
     let posX = 0;
     let posY = 0;
 
+    let scrollUp = function() {
+        let container = this.div.querySelector(".messageContainer");
+        if (container) {
+            container.scrollTop = container.scrollHeight - container.clientHeight;
+        }
+    }.bind(this);
+
     let moveWindow = function(event) {
         this.div.style.top = (event.clientY - posY) + "px";
         this.div.style.left = (event.clientX - posX) + "px";
+        scrollUp(this.div.querySelector(".messageContainer"));
     }.bind(this);
 
     let getPosition = function(event) {
@@ -194,6 +202,7 @@ DesktopWindow.prototype.handleMovement = function() {
         posX = event.clientX - this.div.offsetLeft;
         posY = event.clientY - this.div.offsetTop;
         window.addEventListener("mousemove", moveWindow);
+        scrollUp();
     }.bind(this);
 
     this.div.firstElementChild.addEventListener("mousedown", getPosition);
