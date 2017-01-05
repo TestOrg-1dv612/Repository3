@@ -7,6 +7,7 @@
 </head>
 <body>
     <div id="desktop">
+        <!-- Template for a basic DesktopWindow -->
         <template id="window">
             <div id="unclaimed" class="window-wrapper">
                 <div class="window-top">
@@ -53,12 +54,20 @@
         </nav>
     </footer>
 
+    <!-- Templates for Chat application -->
     <template id="chat">
         <div class="messageContainer"></div>
-        <textarea rows="3" cols="43" class="chatMessage"></textarea>
+        <textarea rows="3" cols="43" class="messageInput"></textarea>
         <p class="user">User: <input type="text"><button type="button">Save</button></p>
     </template>
+    <template id="chatMessage">
+        <div class="message">
+            <p class="username"></p>
+            <p></p>
+        </div>
+    </template>
 
+    <!-- Template for Memory application -->
     <template id="memory">
         <div class="memoryContainer">
             <a href="#"><img src="/image/memory/0.png" alt="A Memory brick" class="brick"></a>
@@ -70,6 +79,7 @@
         </div>
     </template>
 
+    <!-- Template for Remember application -->
     <template id="remember">
         <div class="note">
             <p>Remember!</p>
@@ -77,13 +87,14 @@
         <input type="text" class="note-input"><button type="button">Add</button>
     </template>
 
+    <!-- Template for Info application -->
     <template id="info">
         <h3>Personal Web Desktop <br> — Application</h3>
         <p><strong>Creator:</strong> Miranda Hammarstedt</p>
         <p><strong>Github:</strong> mhammarstedt</p>
         <p><strong>Location:</strong> Ljungby, Sweden</p>
         <br>
-        <p><strong>Latest update:</strong> 2017/01/01</p>
+        <p><strong>Latest update:</strong> 2017/01/05</p>
         <p><strong>Languages:</strong> HTML5, CSS3, JavaScript (ES6)</p>
         <p><strong>Software:</strong> WebStorm, Git, Photoshop CC</p>
         <br>
