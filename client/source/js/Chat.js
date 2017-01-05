@@ -29,13 +29,14 @@ function Chat(id) {
      */
     this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
 
+    /**
+     * Opens up a new chat.
+     */
     this.open();
 }
 
 /**
  * Handles inheritance from DesktopWindow.
- *
- * @type {DesktopWindow}
  */
 Chat.prototype = Object.create(DesktopWindow.prototype);
 Chat.prototype.constructor = Chat;
@@ -48,7 +49,7 @@ Chat.prototype.open = function() {
     let content = document.importNode(template, true);
     this.div.querySelector(".content").appendChild(content);
 
-    let messageInput = this.div.querySelector(".chatMessage");
+    let messageInput = this.div.querySelector(".messageInput");
     let userInfo = this.div.querySelector(".user");
     this.getUser(userInfo);
 
@@ -59,7 +60,7 @@ Chat.prototype.open = function() {
             event.preventDefault();
 
             if (this.user !== "Unknown") {
-                if (!messageInput.value || messageInput.value.trim() === "") {
+                if (!messageInput.value.trim()) {
                     this.message.textContent = "Write your message.";
                 } else {
                     this.send(messageInput.value);
@@ -101,7 +102,6 @@ Chat.prototype.getUser = function(div) {
         if (div.firstElementChild.value) {
             this.user = div.firstElementChild.value;
             input.classList.remove("redbg");
-            input.value = "";
             removeUserElem();
             storage.set("username", this.user);
         }
@@ -149,15 +149,11 @@ Chat.prototype.send = function(input) {
  */
 Chat.prototype.receive = function(data) {
     let container = this.div.querySelector(".messageContainer");
+    let messageDiv = document.importNode(document.querySelector("#chatMessage").content, true);
+    container.appendChild(messageDiv);
 
-    let user = document.createElement("p");
-    user.setAttribute("class", "username");
-    user.appendChild(document.createTextNode(data.username));
-    let pElem = document.createElement("p");
-    pElem.appendChild(document.createTextNode(data.data));
-
-    container.appendChild(user);
-    container.appendChild(pElem);
+    container.lastElementChild.firstElementChild.textContent = data.username;
+    container.lastElementChild.lastElementChild.textContent = data.data;
 
     container.scrollTop = container.scrollHeight - container.clientHeight;
 };
