@@ -149,10 +149,14 @@ DesktopWindow.prototype.position = function() {
             idNr = this.id.slice(1) - 1;
         }
 
-        let elementBefore = document.getElementById(app + idNr);
+        let elementBefore = this.div.previousElementSibling;
         if (elementBefore && elementBefore.style.visibility !== "hidden") {
-            this.div.style.top = (elementBefore.offsetTop + 35) + "px";
-            this.div.style.left = (elementBefore.offsetLeft + 35) + "px";
+            if (elementBefore.offsetTop + 35 > (window.innerHeight - 50)) {
+                this.div.style.left = (elementBefore.offsetLeft - 300) + "px";
+            } else {
+                this.div.style.top = (elementBefore.offsetTop + 35) + "px";
+                this.div.style.left = (elementBefore.offsetLeft + 35) + "px";
+            }
         }
     };
 

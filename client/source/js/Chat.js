@@ -155,6 +155,10 @@ Chat.prototype.receive = function(data) {
     container.lastElementChild.firstElementChild.textContent = data.username;
     container.lastElementChild.lastElementChild.textContent = data.data;
 
+    if (container.children.length > 70) {
+        container.removeChild(container.firstElementChild);
+    }
+
     container.scrollTop = container.scrollHeight - container.clientHeight;
 };
 
