@@ -19,7 +19,7 @@ function Memory(id) {
     DesktopWindow.call(this, id);
 
     /**
-     * The size of the board.
+     * The size of the board in number of bricks, defaults to 16.
      */
     this.size = 16;
 
@@ -44,17 +44,18 @@ function Memory(id) {
     this.pairs = 0;
 
     /**
-     * The number of clicks.
+     * The number of clicks/tries.
      */
     this.nrOfClicks = 0;
 
+    /**
+     * Starts the Memory game.
+     */
     this.start();
 }
 
 /**
  * Handles inheritance from DesktopWindow.
- *
- * @type {DesktopWindow}
  */
 Memory.prototype = Object.create(DesktopWindow.prototype);
 Memory.prototype.constructor = Memory;
@@ -64,7 +65,7 @@ Memory.prototype.constructor = Memory;
  */
 Memory.prototype.start = function() {
     this.shuffle();
-    this.setSize();
+    this.setBoard();
     this.setMenu();
 
     this.dropdown.addEventListener("click", (event) => {
@@ -116,9 +117,9 @@ Memory.prototype.setMenu = function() {
 };
 
 /**
- * Sets the size of the board.
+ * Sets the size of the board and the board elements.
  */
-Memory.prototype.setSize = function() {
+Memory.prototype.setBoard = function() {
     let templateDiv = document.querySelector("#memory").content;
     let div = document.importNode(templateDiv.firstElementChild, false);
     let resultElem = document.importNode(templateDiv.lastElementChild, true);
@@ -158,8 +159,8 @@ Memory.prototype.setSize = function() {
         }
 
         if (img) {
-            let index = parseInt(img.getAttribute("data-brickNr"));
-            this.turnBrick(this.images[index], img);
+            let i = parseInt(img.getAttribute("data-brickNr"));
+            this.turnBrick(this.images[i], img);
         }
     });
 
@@ -203,27 +204,26 @@ Memory.prototype.shuffle = function() {
  * Handles the event of turning a brick.
  *
  * @param {Number} brickImg - The image of the turned brick.
- * @param {Number} index - The index of the turned brick.
- * @param {Element} img - The element containing the brick.
+ * @param {Element} imgElem - The element containing the brick.
  */
-Memory.prototype.turnBrick = function(brickImg, img) {
+Memory.prototype.turnBrick = function(brickImg, imgElem) {
     if (this.turn2) {
         return;
     }
 
-    img.src = "/image/memory/" + brickImg + ".png";
+    imgElem.src = "/image/memory/" + brickImg + ".png";
 
     if (!this.turn1) {
-        this.turn1 = img;
+        this.turn1 = imgElem;
     } else {
-        if (img === this.turn1) {
+        if (imgElem === this.turn1) {
             return;
         }
 
         this.nrOfClicks += 1;
         this.div.querySelector(".tries").textContent = this.nrOfClicks.toString();
 
-        this.turn2 = img;
+        this.turn2 = imgElem;
         if (this.turn1.src === this.turn2.src) {
             this.pairs += 1;
             this.div.querySelector(".pairs").textContent = this.pairs.toString();
@@ -272,7 +272,7 @@ Memory.prototype.restart = function() {
     this.pairs = 0;
     this.nrOfClicks = 0;
     this.shuffle();
-    this.setSize();
+    this.setBoard();
 };
 
 /**
