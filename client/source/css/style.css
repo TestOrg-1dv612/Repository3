@@ -20,7 +20,7 @@ footer {height: 40px; color: white; padding-left: 10px; padding-top: 5px; backgr
 footer ul {display: inline; list-style: none;}
 footer li {vertical-align: top; display: inline;}
 footer img {max-height: 35px;}
-footer li:hover img {max-height: 45px; position: relative; bottom: 10px;}
+footer li:hover img {max-height: 45px; position: relative; bottom: 10px; vertical-align: top;}
 
 /* Footer icon menu for minimized windows */
 .icon-menu {position: absolute; bottom: 50px; background-color: black; font-size: 10px; padding: 5px; opacity: 0.7;
