@@ -33,7 +33,7 @@ function DesktopWindow(id) {
     });
 
     /**
-     * Gets DesktopWindow's top-name.
+     * Gets DesktopWindow's top-icon.
      *
      * @private
      * @type {Element}
@@ -59,7 +59,7 @@ function DesktopWindow(id) {
     });
 
     /**
-     * Gets DesktopWindow's dropdown link in menu.
+     * Gets DesktopWindow's first dropdown link in the first submenu.
      *
      * @private
      * @type {Element}
@@ -72,7 +72,7 @@ function DesktopWindow(id) {
     });
 
     /**
-     * Gets the current DesktopWindow.
+     * Gets the wrapper div of the current DesktopWindow.
      *
      * @private
      * @type {Element}
@@ -102,6 +102,9 @@ function DesktopWindow(id) {
         }
     });
 
+    /**
+     * Creates a new window.
+     */
     this.create();
 }
 
@@ -114,9 +117,7 @@ DesktopWindow.prototype.create = function() {
     document.querySelector("#desktop").appendChild(windowDiv);
     document.querySelector("#unclaimed").id = this.id;
 
-    let id = this.id.toString();
-
-    this.position(id);
+    this.position();
     this.handleMovement();
 
     this.div.querySelector(".content").addEventListener("click", (event) => {
@@ -138,32 +139,39 @@ DesktopWindow.prototype.create = function() {
 
 /**
  * Positions the window in the desktop, stacks if necessary.
- *
- * @param {String} id - The id of the window.
  */
-DesktopWindow.prototype.position = function(id) {
+DesktopWindow.prototype.position = function() {
     let stackWindows = (app) => {
-        if (id.indexOf("1") === -1) {
-            let idNr = id.charAt(1) - 1;
-            if (document.getElementById(app + idNr)) {
-                let elementBefore = document.getElementById(app + idNr);
-                this.div.style.top = (elementBefore.offsetTop + 35) + "px";
-                this.div.style.left = (elementBefore.offsetLeft + 35) + "px";
-            }
+        let idNr;
+        if (this.id.length === 2) {
+            idNr = (this.id.indexOf("1") === -1) ? (this.id.charAt(1) - 1) : "";
+        } else if (this.id.length > 2) {
+            idNr = this.id.slice(1) - 1;
+        }
+
+        let elementBefore = document.getElementById(app + idNr);
+        if (elementBefore && elementBefore.style.visibility !== "hidden") {
+            this.div.style.top = (elementBefore.offsetTop + 35) + "px";
+            this.div.style.left = (elementBefore.offsetLeft + 35) + "px";
         }
     };
 
-    if (id.indexOf("c") !== -1) {
-        stackWindows("c");
-    } else if (id.indexOf("m") !== -1) {
-        this.div.style.left = (this.div.offsetLeft + 200) + "px";
-        stackWindows("m");
-    } else if (id.indexOf("r") !== -1) {
-        this.div.style.left = (this.div.offsetLeft + 400) + "px";
-        stackWindows("r");
-    } else if (id.indexOf("i") !== -1) {
-        this.div.style.left = (this.div.offsetLeft + 600) + "px";
-        stackWindows("i");
+    switch (this.id.slice(0, 1)) {
+        case "c":
+            stackWindows("c");
+            break;
+        case "m":
+            this.div.style.left = (this.div.offsetLeft + 200) + "px";
+            stackWindows("m");
+            break;
+        case "r":
+            this.div.style.left = (this.div.offsetLeft + 400) + "px";
+            stackWindows("r");
+            break;
+        case "i":
+            this.div.style.left = (this.div.offsetLeft + 600) + "px";
+            stackWindows("i");
+            break;
     }
 };
 
@@ -174,7 +182,7 @@ DesktopWindow.prototype.handleMovement = function() {
     let posX = 0;
     let posY = 0;
 
-    let scrollUp = () => {
+    let scrollDown = () => {
         let container = this.div.querySelector(".messageContainer");
         if (container) {
             container.scrollTop = container.scrollHeight - container.clientHeight;
@@ -182,27 +190,30 @@ DesktopWindow.prototype.handleMovement = function() {
     };
 
     let moveWindow = (event) => {
-        this.div.style.top = (event.clientY - posY) + "px";
         this.div.style.left = (event.clientX - posX) + "px";
-        scrollUp(this.div.querySelector(".messageContainer"));
+        this.div.style.top = (event.clientY - posY) + "px";
+        scrollDown();
     };
 
     let getPosition = (event) => {
         event.preventDefault();
 
         if (event.target === this.div.querySelector(".close")) {
-            this.close(this.div);
+            this.close();
             return;
         } else if (event.target === this.div.querySelector(".minimize")) {
             this.minimize();
             return;
         }
 
-        this.div.parentNode.appendChild(this.div);
+        if (this.div !== this.div.parentNode.lastElementChild) {
+            this.div.parentNode.appendChild(this.div);
+        }
+
         posX = event.clientX - this.div.offsetLeft;
         posY = event.clientY - this.div.offsetTop;
         window.addEventListener("mousemove", moveWindow);
-        scrollUp();
+        scrollDown();
     };
 
     this.div.firstElementChild.addEventListener("mousedown", getPosition);
@@ -224,7 +235,7 @@ DesktopWindow.prototype.minimize = function() {
     let addWindow = (iconMenu, app) => {
         iconMenu.appendChild(aTag);
         iconMenu.classList.add("minimized");
-        iconMenu.lastElementChild.textContent = app + " " + (this.id.charAt(1));
+        iconMenu.lastElementChild.textContent = app + " " + (this.id.slice(1));
 
         iconMenu.lastElementChild.addEventListener("click", (event) => {
             event.preventDefault();
@@ -238,25 +249,27 @@ DesktopWindow.prototype.minimize = function() {
     };
 
     let iconMenus = document.querySelectorAll("nav .icon-menu");
-
-    if (this.id.indexOf("c") !== -1) {
-        addWindow(iconMenus[0], "Chat");
-    } else if (this.id.indexOf("m") !== -1) {
-        addWindow(iconMenus[1], "Memory");
-    } else if (this.id.indexOf("r") !== -1) {
-        addWindow(iconMenus[2], "Remember");
-    } else if (this.id.indexOf("i") !== -1) {
-        addWindow(iconMenus[3], "Info");
+    switch (this.id.slice(0, 1)) {
+        case "c":
+            addWindow(iconMenus[0], "Chat");
+            break;
+        case "m":
+            addWindow(iconMenus[1], "Memory");
+            break;
+        case "r":
+            addWindow(iconMenus[2], "Remember");
+            break;
+        case "i":
+            addWindow(iconMenus[3], "Info");
+            break;
     }
 };
 
 /**
  * Closes the window.
- *
- * @param {Element} element - The element window to close.
  */
-DesktopWindow.prototype.close = function(element) {
-    element.parentNode.removeChild(element);
+DesktopWindow.prototype.close = function() {
+    this.div.parentNode.removeChild(this.div);
 
     if (this.socket) {
         this.socket.close();
