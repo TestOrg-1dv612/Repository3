@@ -46,7 +46,7 @@ function getDate(container) {
 }
 
 /**
- * Gets application information for info window.
+ * Gets the application information for info window.
  *
  * @param {Object} element - The element to display the information in.
  */
@@ -55,57 +55,54 @@ function info(element) {
     let container = element.div.querySelector(".content");
 
     container.appendChild(document.importNode(template, true));
-    let menu = element.div.querySelector(".menu");
-    menu.parentNode.removeChild(menu);
+    let subMenu = element.div.querySelector(".menu");
+    subMenu.parentNode.removeChild(subMenu);
 }
 
 /**
- * Initiates desktop by adding necessary event listeners.
+ * Initiates desktop by adding necessary event listeners to open windows and getting time and date.
  */
 function init() {
     let newWindow;
-    let cNr = 1;
-    let mNr = 1;
-    let rNr = 1;
-    let iNr = 1;
+    let numbers = [1, 1, 1, 1];
     document.querySelectorAll("nav .icons").forEach((current, index) => {
         switch (index){
             case 0:
                 current.addEventListener("click", (event) => {
                     event.preventDefault();
-                    newWindow = new Chat("c" + cNr);
+                    newWindow = new Chat("c" + numbers[0]);
                     newWindow.name.textContent = "Chat";
                     newWindow.icon.src = "/image/chat.png";
-                    cNr += 1;
+                    numbers[0] += 1;
                 });
 
                 break;
             case 1:
                 current.addEventListener("click", (event) => {
                     event.preventDefault();
-                    newWindow = new Memory("m" + mNr);
-                    mNr += 1;
+                    newWindow = new Memory("m" + numbers[1]);
+                    numbers[1] += 1;
                 });
 
                 break;
             case 2:
                 current.addEventListener("click", (event) => {
                     event.preventDefault();
-                    newWindow = new Remember("r" + rNr);
+                    newWindow = new Remember("r" + numbers[2]);
                     newWindow.name.textContent = "Remember";
                     newWindow.icon.src = "/image/notes.png";
-                    rNr += 1;
+                    numbers[2] += 1;
                 });
 
                 break;
             case 3:
                 current.addEventListener("click", (event) => {
                     event.preventDefault();
-                    newWindow = new DesktopWindow("i" + iNr);
+                    newWindow = new DesktopWindow("i" + numbers[3]);
                     newWindow.name.textContent = "Application info";
                     newWindow.icon.src = "/image/info.png";
                     info(newWindow);
-                    iNr += 1;
+                    numbers[3] += 1;
                 });
 
                 break;
