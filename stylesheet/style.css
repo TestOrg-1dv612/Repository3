@@ -11,7 +11,7 @@ footer, h1, h2, h3, h4, p, ul, li, ol, hr, a
 html, body {height: 100%; font-family: Tahoma, sans-serif; overflow: hidden;}
 
 /* Container of the desktop */
-#desktop {width: 100%; min-height: 100%; background-color: white; background-image: url(/image/desktopbg.jpg);
+#desktop {width: 100%; min-height: 100%; background-color: white; background-image: url(image/desktopbg.jpg);
     background-position: center bottom; background-size: contain; background-repeat: no-repeat; margin-bottom: -45px;}
 
 /* Footer and nav icons */
