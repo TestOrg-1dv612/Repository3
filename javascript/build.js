@@ -707,7 +707,7 @@
             return;
         }
 
-        imgElem.src = "/image/memory/" + brickImg + ".png";
+        imgElem.src = "image/memory/" + brickImg + ".png";
 
         if (!this.turn1) {
             this.turn1 = imgElem;
@@ -737,8 +737,8 @@
                 }, 400);
             } else {
                 setTimeout(() => {
-                    this.turn1.src = "/image/memory/0.png";
-                    this.turn2.src = "/image/memory/0.png";
+                    this.turn1.src = "image/memory/0.png";
+                    this.turn2.src = "image/memory/0.png";
 
                     this.turn1 = null;
                     this.turn2 = null;
@@ -1095,7 +1095,7 @@
                         event.preventDefault();
                         newWindow = new Chat("c" + numbers[0]);
                         newWindow.name.textContent = "Chat";
-                        newWindow.icon.src = "../image/chat.png";
+                        newWindow.icon.src = "image/chat.png";
                         numbers[0] += 1;
                     });
 
@@ -1113,7 +1113,7 @@
                         event.preventDefault();
                         newWindow = new Remember("r" + numbers[2]);
                         newWindow.name.textContent = "Remember";
-                        newWindow.icon.src = "../image/notes.png";
+                        newWindow.icon.src = "image/notes.png";
                         numbers[2] += 1;
                     });
 
@@ -1123,7 +1123,7 @@
                         event.preventDefault();
                         newWindow = new DesktopWindow("i" + numbers[3]);
                         newWindow.name.textContent = "Application info";
-                        newWindow.icon.src = "../image/info.png";
+                        newWindow.icon.src = "image/info.png";
                         info(newWindow);
                         numbers[3] += 1;
                     });
