@@ -1095,7 +1095,7 @@
                         event.preventDefault();
                         newWindow = new Chat("c" + numbers[0]);
                         newWindow.name.textContent = "Chat";
-                        newWindow.icon.src = "./image/chat.png";
+                        newWindow.icon.src = "https://mhammarstedt.github.io/PWD/image/chat.png";
                         numbers[0] += 1;
                     });
 
@@ -1113,7 +1113,7 @@
                         event.preventDefault();
                         newWindow = new Remember("r" + numbers[2]);
                         newWindow.name.textContent = "Remember";
-                        newWindow.icon.src = "./image/notes.png";
+                        newWindow.icon.src = "https://mhammarstedt.github.io/PWD/image/notes.png";
                         numbers[2] += 1;
                     });
 
@@ -1123,7 +1123,7 @@
                         event.preventDefault();
                         newWindow = new DesktopWindow("i" + numbers[3]);
                         newWindow.name.textContent = "Application info";
-                        newWindow.icon.src = "./image/info.png";
+                        newWindow.icon.src = "https://mhammarstedt.github.io/PWD/image/info.png";
                         info(newWindow);
                         numbers[3] += 1;
                     });
