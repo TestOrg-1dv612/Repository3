@@ -28,7 +28,7 @@
         /**
          * The web socket for the chat.
          */
-        this.socket = new WebSocket("ws://vhost3.lnu.se:20080/socket/");
+        this.socket = new WebSocket();
 
         /**
          * Opens up a new chat.
