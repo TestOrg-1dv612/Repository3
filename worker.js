@@ -13,15 +13,15 @@ let cacheFiles = [
     "./index.html",
     "./stylesheet/style.css",
     "./javascript/build.js",
-    "./PWD/image/memory/0.png",
-    "./PWD/image/memory/1.png",
-    "./PWD/image/memory/2.png",
-    "./PWD/image/memory/3.png",
-    "./PWD/image/memory/4.png",
-    "./PWD/image/memory/5.png",
-    "./PWD/image/memory/6.png",
-    "./PWD/image/memory/7.png",
-    "./PWD/image/memory/8.png"
+    "./image/memory/0.png",
+    "./image/memory/1.png",
+    "./image/memory/2.png",
+    "./image/memory/3.png",
+    "./image/memory/4.png",
+    "./image/memory/5.png",
+    "./image/memory/6.png",
+    "./image/memory/7.png",
+    "./image/memory/8.png"
 ];
 
 /**

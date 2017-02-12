@@ -708,7 +708,7 @@
             return;
         }
 
-        imgElem.src = "PWD/image/memory/" + brickImg + ".png";
+        imgElem.src = "image/memory/" + brickImg + ".png";
 
         if (!this.turn1) {
             this.turn1 = imgElem;
@@ -1096,7 +1096,7 @@
                         event.preventDefault();
                         newWindow = new Chat("c" + numbers[0]);
                         newWindow.name.textContent = "Chat";
-                        newWindow.icon.src = "PWD/image/chat.png";
+                        newWindow.icon.src = "image/chat.png";
                         numbers[0] += 1;
                     });
 
@@ -1114,7 +1114,7 @@
                         event.preventDefault();
                         newWindow = new Remember("r" + numbers[2]);
                         newWindow.name.textContent = "Remember";
-                        newWindow.icon.src = "PWD/image/notes.png";
+                        newWindow.icon.src = "image/notes.png";
                         numbers[2] += 1;
                     });
 
@@ -1124,7 +1124,7 @@
                         event.preventDefault();
                         newWindow = new DesktopWindow("i" + numbers[3]);
                         newWindow.name.textContent = "Application info";
-                        newWindow.icon.src = "PWD/image/info.png";
+                        newWindow.icon.src = "image/info.png";
                         info(newWindow);
                         numbers[3] += 1;
                     });
