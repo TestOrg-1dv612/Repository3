@@ -28,7 +28,7 @@
         /**
          * The web socket for the chat.
          */
-        this.socket = new WebSocket();
+        /*this.socket = new WebSocket();*/
 
         /**
          * Opens up a new chat.
@@ -64,7 +64,7 @@
                     if (!messageInput.value.trim()) {
                         this.message.textContent = "Write your message.";
                     } else {
-                        this.send(messageInput.value);
+                        //this.send(messageInput.value);
                         messageInput.value = "";
                         this.message.textContent = "";
                     }
@@ -74,13 +74,14 @@
             }
         });
 
+        /*
         this.socket.addEventListener("message", (event) => {
             let data = JSON.parse(event.data);
 
             if (data.type === "message" || data.type === "notification") {
                 this.receive(data);
             }
-        });
+        });*/
     };
 
     /**
