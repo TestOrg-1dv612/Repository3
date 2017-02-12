@@ -7,7 +7,7 @@
 
 "use strict";
 
-let cacheName = "PWD-cache-v3";
+let cacheName = "PWD-cache-v2";
 let cacheFiles = [
     "./",
     "./index.html",
